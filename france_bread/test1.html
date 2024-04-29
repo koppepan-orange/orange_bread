@@ -1,0 +1,20 @@
+<html>
+	<head>
+		<title>java script's test</title>
+		<meta charset="UTF-8">
+	</head>
+	<body><p align="center">ru-let<br>
+		<script>
+		function delay(ms) {
+ 		 return new Promise(resolve => setTimeout(resolve, ms));
+				}
+		async function exampleAsyncFunction() {
+ 		 console.log('処理を開始します');
+ 		 await delay(2000); // 2秒間の遅延
+ 		 console.log('2秒経過しました');
+}
+	exampleAsyncFunction();
+		</script>
+		</p>
+	</body>
+</html>
