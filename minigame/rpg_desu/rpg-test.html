@@ -8,20 +8,29 @@
 </head>
 <body>
   <br><br><br><br><br><br><br>
-  <p align="center" class="rpg">RPG Clicker Desu
-  <br><b id="EnemyName">enemy</b>   <i>Lv.</i><i id="EnemyLevel">1</i>   <u id="EnemyDebuff"> </u>
+  <p align="center" class="rpg">
+    <style id="ButtonStyle">
+    </style>
+  <span>turn:</span><span id="TurnCount">0</span>
+  <br><b id="EnemyName">enemy</b>   <i>Lv.</i><i id="EnemyLevel">1</i>   <u id="EnemyDebuff"></u>   <u id="EnemySkillDebuff"></u>
   <br><span id="EnemyHealth">0</span>/<span id="EnemyMaxHealth">0</span>
-  <br><br><b>player</b>   <i>Lv.</i><i id="PlayerLevel">1</i>   <u id="PlayerBuff"> </u>
+  <span id="PlayerFriendFront"></span>
+  <br><br><b id="PlayerName">player</b>   <i>Lv.</i><i id="PlayerLevel">1</i>   <u id="PlayerBuff"></u>   <u id="PlayerSkillBuff"></u>
   <br><span id="PlayerHealth">0</span>/<span id="PlayerMaxHealth">0</span>
+  <span id="PlayerFriendBack"></span>
   <br><br><br>
-  <button class="rpgbutton" id="Rselect1" onclick="Rselect1()">attack</button>  
-  <button class="rpgbutton" id="Rselect2" onclick="Rselect2()">magic</button>
-  <button class="rpgbutton" id="Rselect3" onclick="Rselect3()">tools</button>
-  <button class="rpgbutton" id="Rback" onclick="Rback()">pass</button>
-  <br><br><span align="center" id="Rlog">pless "reset" to game start</span>
-  <br><button class="rpgbutton" id="RStatusButton" onclick="RStatusAppear()">status</button>
-  <br><span id="RStatus"> </span>
-  <br><br><br><br><button align="center" onclick="reset()">reset</button>
-  </p>
+  <button class="button" id="select1" onclick="select1()">attack</button>  
+  <button class="button" id="select2" onclick="select2()">magic</button>
+  <button class="button" id="select3" onclick="select3()">tools</button>
+  <button class="button" id="back" onclick="back()">pass</button>
+  <br><span id="Skillbutton"> </span>
+  <br><br><span align="center" id="log">pless "reset" to game start</span>
+  <br><span id="StatusAppearDisappear"><button class="button" id="StatusButton" onclick="StatusAppear()">status</button></span>
+  <br><span id="Status"> </span>
+  <br><br><br><br><span id="Thisappearsafterthegamestartsreset"> </span>
+  <span id="Thisdisappearsafterthegamestartnameinput"><br><input class="button" id="NameInputText" type="text" maxlength="10" placeholder="write name here"></span>
+  <br><span id="Thisdisappearsafterthegamestartbegin"><button align="center" class="button" onclick="begin()">start!</button></span>
+</p>
 </body>
 </html>
+<!-- こっちではガチャとか作ってみたいね -->

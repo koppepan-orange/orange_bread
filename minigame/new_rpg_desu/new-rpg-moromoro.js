@@ -443,6 +443,7 @@ async function doubleslash() {
             x -= (playerattack * playerpower);
             x = Math.floor(x);
             damage = y - x;
+            if(playerskillbuff == 2){damage = damage * 2; playerskillbuff = 0; bufftekiou();}
             if(damage < 0){damage = 0};
             if(damage > y){damage = y};
             enemyhealth -= damage;
@@ -746,7 +747,7 @@ function greenslimecopybreak(){
     document.getElementById('log').textContent = 'greenslimeのコピーは倒された...';
 }
 function mechanicturrettekiou(){
-    document.getElementById('MechanicTurret').textContent = mechanicturret + 'x';
+    document.getElementById('MechanicTurret').textContent = 'x' + mechanicturret;
     }
 function mechanicturretbreak(){
     document.getElementById('PlayerFriendBack').innerHTML = '';
@@ -780,6 +781,7 @@ async function enemieturn() {
     }
 }
 async function enemyattack() {
+    w = 1;
     x = playerhealth;
     y = playerhealth;
     x -= enemylevel;
@@ -808,7 +810,7 @@ async function enemyattack() {
     if (enemyskilldebuff == 1){
         await delay(1000);
         enemyskilldebuff = 0;
-        bufftekiou()
+        bufftekiou();
         document.getElementById('log').textContent = enemyname + 'からスライムが剥がれた!';
     }
     if (turn == 2){
@@ -901,6 +903,7 @@ function nextenemy() {
     if(y == 0){enemyprefixe1 = enemyprefixes[Math.floor(Math.random() * enemyprefixes.length)]}
     y = Math.floor(Math.random() * 2); // 1/2
     if(y == 0){enemyprefixe2 = enemyprefixes[Math.floor(Math.random() * enemyprefixes.length)]}
+    if(enemyprefixe1 == enemyprefixe2){enemyprefixe2 = 0}
     if(enemyprefixe1 !== 0 && enemyprefixe2 !== 0){enemyname = enemyprefixe1 + ' ' + enemyprefixe2 + ' ' + enemyname}
     else if (enemyprefixe1 !== 0 && enemyprefixe2 == 0){enemyname = enemyprefixe1 + ' ' + enemyname}
     else if (enemyprefixe1 == 0 && enemyprefixe2 !== 0){enemyname = enemyprefixe2 + ' ' + enemyname}
