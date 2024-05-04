@@ -18,3 +18,16 @@ function showOutput() {
     link.target = '_blank'; // 新しいタブで開く
     outputDiv.appendChild(link)
 }
+
+//<!DOCTYPE html>
+//<html>
+//<head>
+//  <title>null</title>
+//</head>
+//<body>
+//  <input type="text" id="inputText" placeholder="テキストを入力">
+//  <button onclick="showOutput()">送信</button>
+//  <p id="output"></p>
+//  <script src="nanka1.js"></script>
+//</body>
+//</html>

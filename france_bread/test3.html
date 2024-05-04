@@ -1,18 +1,14 @@
 <!DOCTYPE html>
- <meta charset="utf-8">
- <title>clicker-test</title>
- <body>
-   <p align="center">clicker
-  <pre id="ClickerValue">0</pre>
-    <button id="increment" onclick="clickerincrease()">+</button>
-<script>
-  let count = 0
-  function clickerincrease(){
-   count += 1;
-   document.getElementById('ClickerValue').textContent = count;
-  }
+<html>
+<head>
+  <title>clicker of mugen</title>
+  <html lang="ja">
+  <meta charset="UTF-8">
+</head>
+<body>
+  <p align="center" class="rpg">
+    <image id="LevelPlate" src="level_plate_1.png" height="50" width="50"></image><image id="ExpPlate" src="level_plate_1.png" height="50" width="50"></image><br><br><br><button class="button" id="GoToBattle" onclick="GoToBattle()">Go To Battle</button><br><br><br><button class="button" id="GoToBossBattle" onclick="GoToBossBattle()">Go To Boss Battle</button><br><br><br><button class="button" id="GoToCityBattle" onclick="GoToShop()">Go To Shop</button><br><br><br>
+</p>
 </script>
-  </p>
- </body>
- </html
- 
+</body>
+</html>
