@@ -1,12 +1,55 @@
 <html>
 <head>
     <meta charset="UTF-8">
-    <script src="nankayaru1.js"></script>
+    <script src="nankayaru2.js"></script>
+    <style>
+        body{
+        background-color: #000000;
+        text-align: center;
+        }
+        .button{
+            border: 2px solid #00d0ff;
+            padding: 2px 3px;
+            background: #faff72;
+            cursor: pointer;
+        }
+        .invisiblebutton{
+            border: 2px solid #000000;
+            padding: 2px 3px;
+            background: #000000;
+            cursor: pointer;
+            color: #ffffff;
+        }
+    </style>
 </head>
-<body>
-    <input id="gamestart" type="button" value="gamestart" onclick="gamestart()"><br>
-    <input id="addmoney" type="button" value="addmoney" onclick="addmoney()">
-    <input id="reset" type="button" value="reset" onclick="resetmoney()">
-    <br><span id="log">pless gamestart to start</span>
+<body class="body">
+    <button class="button" onclick="ChangeStage()">start</button><br><br>
+    <canvas id="wakuwakusan" width="250" height="250" style="border:1px solid #FFFFFF;"></canvas><br>
+    <button class="invisiblebutton" id="1" onclick="ClickedButton(1)">＃</button>
+    <button class="invisiblebutton" id="2" onclick="ClickedButton(2)">＃</button>
+    <button class="invisiblebutton" id="3" onclick="ClickedButton(3)">＃</button>
+    <button class="invisiblebutton" id="4" onclick="ClickedButton(4)">＃</button>
+    <button class="invisiblebutton" id="5" onclick="ClickedButton(5)">＃</button><br>
+    <button class="invisiblebutton" id="6" onclick="ClickedButton(6)">＃</button>
+    <button class="invisiblebutton" id="7" onclick="ClickedButton(7)">　</button>
+    <button class="invisiblebutton" id="8" onclick="ClickedButton(8)">　</button>
+    <button class="invisiblebutton" id="9" onclick="ClickedButton(9)">　</button>
+    <button class="invisiblebutton" id="10" onclick="ClickedButton(10)">＃</button><br>
+    <button class="invisiblebutton" id="11" onclick="ClickedButton(11)">＃</button>
+    <button class="invisiblebutton" id="12" onclick="ClickedButton(12)">　</button>
+    <button class="invisiblebutton" id="13" onclick="ClickedButton(13)">　</button>
+    <button class="invisiblebutton" id="14" onclick="ClickedButton(14)">　</button>
+    <button class="invisiblebutton" id="15" onclick="ClickedButton(15)">＃</button><br>
+    <button class="invisiblebutton" id="16" onclick="ClickedButton(16)">＃</button>
+    <button class="invisiblebutton" id="17" onclick="ClickedButton(17)">　</button>
+    <button class="invisiblebutton" id="18" onclick="ClickedButton(18)">＠</button>
+    <button class="invisiblebutton" id="19" onclick="ClickedButton(19)">　</button>
+    <button class="invisiblebutton" id="20" onclick="ClickedButton(20)">＃</button><br>
+    <button class="invisiblebutton" id="21" onclick="ClickedButton(21)">＃</button>
+    <button class="invisiblebutton" id="22" onclick="ClickedButton(22)">＃</button>
+    <button class="invisiblebutton" id="23" onclick="ClickedButton(23)">＃</button>
+    <button class="invisiblebutton" id="24" onclick="ClickedButton(24)">＃</button>
+    <button class="invisiblebutton" id="25" onclick="ClickedButton(25)">＃</button><br>
+<p id="log" class="invisiblebutton"></p>
 </body>
 </html>

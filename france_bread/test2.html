@@ -19,23 +19,45 @@
     <hr noshade="true">
 
     <span id="InShopScene"><!-- shop scene -->
-    <button class="button" id="GoToCafe" onclick="ShopBuyWeapons()">Buy Weapons</button>
-    <br><br><button class="button" id="GoToCafe" onclick="ShopBuyArmors()">Buy Armors</button>
-    <br><br><button class="button" id="GoToCafe" onclick="ShopBuyTools()">Buy Tools</button>
+    <button class="button" id="ShopBuyWeapons" onclick="ShopBuyWeapons()">Buy Weapons</button>
+    <br><br><button class="button" id="ShopBuyArmors" onclick="ShopBuyArmors()">Buy Armors</button>
+    <br><br><button class="button" id="ShopBuyTools" onclick="ShopBuyTools()">Buy Tools</button>
     </span>
-    <br><br><br><br><button class="button" id="GoToCity" onclick="GoToCity()">Back To City</button>
-    <hr noshade="true">
-    <span id="InShopScene"><!-- buy weapons and armors scene-->
-
-      <br><br><br><br><button class="button" id="GoToCity" onclick="GoToShop()">Back To Shop</button>
+    <br><br><br><br><button class="button" id="BackToCity" onclick="GoToCity()">Back To City</button>
+<hr noshade="true">
+    <span id="InShopScene"><!-- buy weapons scene-->
+      <p>
+        <li>
+          <button class="button" id="BuySword" onclick="BuySword()">Sword</button>
+        </li>
+        <li>
+          <button class="button" id="BuyHammer" onclick="BuyHammer()">Hammer</button>
+        </li>
+        <li>
+          <button class="button" id="BuyStaff" onclick="BuyStaff()">Staff</button>
+        </li>
+      </p>
+      <button class="button" id="BakcToShop" onclick="GoToShop()">Back To Shop</button>
+      <br><br><br><br><button class="button" id="BakcToShop" onclick="GoToShop()">Back To Shop</button>
       </span>
-      <br><br><br><br><button class="button" id="GoToCity" onclick="GoToCity()">Back To City</button>
+      <br><br><br><br><button class="button" id="BackToCity" onclick="GoToCity()">Back To City</button>
 <hr noshade="true">
       <span id="InShopScene"><!-- buy tools scene-->
 
-        <br><br><br><br><button class="button" id="GoToCity" onclick="GoToShop()">Back To Shop</button>
+        <br><br><br><br><button class="button" id="BackToShop" onclick="GoToShop()">Back To Shop</button>
         </span>
-        <br><br><br><br><button class="button" id="GoToCity" onclick="GoToCity()">Back To City</button>
+        <br><br><br><br><button class="button" id="BackToCity" onclick="GoToCity()">Back To City</button>
 
   </p>
+  <script>
+    function ShopBuyWeapons(){
+      document.getElementById('InShopScene').innerHTML = '';
+    }
+    function GoToCity(){
+    document.getElementById('BattleScene').innerHTML = '<button class="button" id="GoToBattle" onclick="GoToBattle()">Go To Battle</button><br><br><br><button class="button" id="GoToBossBattle" onclick="GoToBossBattle()">Go To Boss Battle</button><br><br><br><button class="button" id="GoToCityBattle" onclick="GoToShop()">Go To Shop</button><br><br><br>';
+  } // document.getElementById("LevelPlate").src = 'level_plate_' + x + '.png';
+function GoToShop(){
+    document.getElementById('BattleScene').innerHTML = '<span>sorry. shop is not ready. please come back tomorrow.</span><br><br><br><button class="button" id="GoToCity" onclick="GoToCity()">Go To City</button>';
+    }
+  </script>
  </body>

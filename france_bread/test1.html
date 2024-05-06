@@ -1,20 +1,29 @@
+
+<!DOCTYPE html>
 <html>
-	<head>
-		<title>java script's test</title>
-		<meta charset="UTF-8">
-	</head>
-	<body><p align="center">ru-let<br>
-		<script>
-		function delay(ms) {
- 		 return new Promise(resolve => setTimeout(resolve, ms));
-				}
-		async function exampleAsyncFunction() {
- 		 console.log('処理を開始します');
- 		 await delay(2000); // 2秒間の遅延
- 		 console.log('2秒経過しました');
-}
-	exampleAsyncFunction();
-		</script>
-		</p>
-	</body>
+<head>
+  <title>card-test</title>
+  <meta charset="utf-8">
+  <script>
+    let cardsmarks = ['♠', '♣', '♦', '♥'];
+    let cardsnumbers = ['A', '2', '3', '4', '5', '6', '7', '8', '9', '10', 'J', 'Q', 'K'];
+    let cards = [];
+    let card = 0;
+    // make cards
+    for (let i = 0; i < cardsmarks.length; i++) {
+        for (let j = 0; j < cardsnumbers.length; j++) {
+            cards.push(cardsmarks[i] + cardsnumbers[j]);
+        }
+    }
+    // make card
+    function makecard() {
+        card = cards[Math.floor(Math.random() * cards.length)];
+        document.getElementById('card').textContent = card
+    }
+  </script>
+</head>
+<body>
+<span id="card"></span>
+<br><button onclick="makecard()">click</button>
+</body>
 </html>

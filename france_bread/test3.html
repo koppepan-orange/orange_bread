@@ -1,14 +1,26 @@
-<!DOCTYPE html>
 <html>
-<head>
-  <title>clicker of mugen</title>
-  <html lang="ja">
-  <meta charset="UTF-8">
-</head>
-<body>
-  <p align="center" class="rpg">
-    <image id="LevelPlate" src="level_plate_1.png" height="50" width="50"></image><image id="ExpPlate" src="level_plate_1.png" height="50" width="50"></image><br><br><br><button class="button" id="GoToBattle" onclick="GoToBattle()">Go To Battle</button><br><br><br><button class="button" id="GoToBossBattle" onclick="GoToBossBattle()">Go To Boss Battle</button><br><br><br><button class="button" id="GoToCityBattle" onclick="GoToShop()">Go To Shop</button><br><br><br>
-</p>
-</script>
-</body>
+  <head>
+    <meta charset="utf-8" />
+    <title>Canvas tutorial</title>
+    <style>
+      canvas {
+        border: 1px solid black;
+      }
+    </style>
+  </head>
+  <body align="center">
+    <canvas id="canvas001" width="500" height="500"></canvas>
+    <a href="test4.html">next</a>
+    <script>
+window.onload = function() {
+    const canvas001 = document.getElementById("canvas001");
+    if (canvas001.getContext) {
+        const context001 = canvas001.getContext("2d");
+        context001.font = '50px arial';
+        const textWidth = context001.measureText('a').width;
+        context001.fillText('鋼の剣 100€', 5, 10);
+    }
+};
+    </script>
+  </body>
 </html>
