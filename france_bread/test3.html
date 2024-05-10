@@ -1,7 +1,7 @@
 <html>
   <head>
     <meta charset="utf-8" />
-    <title>Canvas tutorial</title>
+    <title>Canvas Tukatte Mitai</title>
     <style>
       canvas {
         border: 1px solid black;
@@ -9,18 +9,72 @@
     </style>
   </head>
   <body align="center">
-    <canvas id="canvas001" width="500" height="500"></canvas>
-    <a href="test4.html">next</a>
+    <canvas id="myCanvas" width="500" height="500"></canvas>
+    <br><br>
+    <input type="text" id="NameText" placeholder="write name here">　<button onclick="NameTekiou()">sent</button>
     <script>
-window.onload = function() {
-    const canvas001 = document.getElementById("canvas001");
-    if (canvas001.getContext) {
-        const context001 = canvas001.getContext("2d");
-        context001.font = '50px arial';
-        const textWidth = context001.measureText('a').width;
-        context001.fillText('鋼の剣 100€', 5, 10);
-    }
-};
+        var canvas = document.getElementById('myCanvas');
+        var ctx = canvas.getContext('2d');
+        var textX = 10; // テキストの初期X座標
+        var textY = 50; // テキストの初期Y座標
+        var speed = 5; // テキストの移動速度
+        var keysPressed = {}; // 押されているキーの状態を保持するオブジェクト
+        let dx = 0;
+        let dy = 0;
+        let TEXT = 'あ';
+
+        function NameTekiou() {
+            TEXT = document.getElementById('NameText').value;
+        }
+        function drawText() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height); // Canvasをクリア
+            ctx.font = '30px Arial';
+            ctx.fillStyle = 'red';
+            ctx.fillText(TEXT, textX, textY);
+        }
+
+        function moveText() {
+            dx = 0;
+            dy = 0;
+
+            // 左右方向の移動量を計算
+            if (keysPressed['ArrowLeft']) {
+                dx -= speed;
+            }
+            if (keysPressed['ArrowRight']) {
+                dx += speed;
+            }
+            if (keysPressed['ArrowUp']) {
+                dy -= speed;
+            }
+            if (keysPressed['ArrowDown']) {
+                dy += speed;
+            }
+            if (dx !== 0 && dy !== 0) {
+                // 対角線上の移動の場合、移動量を1/root(2)倍にする
+                var diagonalFactor = 1 / Math.sqrt(2);
+                dx *= diagonalFactor;
+                dy *= diagonalFactor;
+            }
+
+            // テキストの位置を更新
+            textX += dx;
+            textY += dy;
+
+            drawText(); // テキストを再描画
+        }
+        // キーボードイベントを監視
+        document.addEventListener('keydown', function(event) {
+            keysPressed[event.key] = true;
+        });
+        document.addEventListener('keyup', function(event) {
+            keysPressed[event.key] = false;
+        });
+
+        // テキストを定期的に移動
+        setInterval(moveText, 10);
+
+        drawText(); // 初期描画
     </script>
   </body>
 </html>
