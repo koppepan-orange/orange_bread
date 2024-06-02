@@ -4,9 +4,18 @@
   <title>clicker of mugen</title>
   <html lang="ja">
   <meta charset="UTF-8">
-  <script src="rpg-moromoro.js"></script> <!-- https://koppepan-orange-game.github.io/game_daisuki/clicker_of_mugen_moromoro.js -->
-  <style>.AllSentences{margin:0 auto;text-align:center;}
-    @font-face{font-family:comicsans;src:url('Ldfcomicsans-jj7l.ttf');}*{font-family:comicsans;}</style>
+  <script src="break-rpg-moromoro.js"></script> <!-- https://koppepan-orange-game.github.io/game_daisuki/clicker_of_mugen_moromoro.js -->
+  <style>
+  .AllSentences{margin:0 auto;text-align:center;}
+    @font-face{font-family:comicsans;src:url('Ldfcomicsans-jj7l.ttf');}
+      *{font-family:comicsans;}
+      .offskillbutton{
+        border: 2px solid #6d6d6d;
+        padding: 2px 3px;
+        background: #c9c9c9;
+        cursor: pointer;
+      } 
+    </style>
 </head>
 <body class="AllSentences">
   <br><br><br>
@@ -26,7 +35,7 @@
   <button class="button" id="select2" onclick="select2()">magic</button>
   <button class="button" id="select3" onclick="select3()">tools</button>
   <button class="button" id="back" onclick="back()">pass</button>
-  <br><span id="Skillbutton"> </span>
+  <br><span id="Skillbutton"></span>
   <br><br><span align="center" id="log">pless "reset" to game start</span>
   <br><span id="StatusAppearDisappear"><button class="button" id="StatusButton" onclick="StatusAppear()">status</button></span>
   <br><span id="Status"> </span>

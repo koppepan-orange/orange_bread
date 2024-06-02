@@ -9,15 +9,20 @@
     <span id="random">0</span>
  <script>
     let x = 0
+    let y = 0
+    let z = 0
     function random(){
     x = Math.floor(Math.random() * 10) +1;
     document.getElementById('random').textContent = x;
     }
+    let money = 1000;
+    let nowshop = 0;
+    let haveweapons = [];
+    let havearmors = [];
+    let havetools = [];
   </script>
-  <p align="center">
-
+    <span id="MONEY"></span>
     <hr noshade="true">
-
     <span id="InShopScene"><!-- shop scene -->
     <button class="button" id="ShopBuyWeapons" onclick="ShopBuyWeapons()">Buy Weapons</button>
     <br><br><button class="button" id="ShopBuyArmors" onclick="ShopBuyArmors()">Buy Armors</button>
@@ -29,6 +34,7 @@
       <p>
         ここにはこんなものがあるけど、どうする？<br>
         <iframe height="230" width="200" src="https://koppepan-orange-game.github.io/game_daisuki/clicker_of_mugen_shop_weapons.txt"></iframe>
+        <br><input type="text" id="ShopInputText" minlength="2" maxlength="2" size="16" placeholder="write number here"><button class="button" onclick="ShopBuyButton()">Buy</button>
       </p>
       <br><br><br><br><button class="button" id="BakcToShop" onclick="GoToShop()">Back To Shop</button>
       </span>
@@ -38,6 +44,7 @@
       <p>
         うちの店ではこんなものが売ってるよ<br>
         <iframe height="230" width="200" src="https://koppepan-orange-game.github.io/game_daisuki/clicker_of_mugen_shop_armors.txt"></iframe>
+        <br><input type="text" id="ShopInputText" minlength="2" maxlength="2" size="16" placeholder="write number here"><button class="button" onclick="ShopBuyButton()">Buy</button>
       </p>
       <br><br><br><br><button class="button" id="BakcToShop" onclick="GoToShop()">Back To Shop</button>
       </span>
@@ -47,12 +54,32 @@
       <p>
         いらっしゃいませぇぇぇぇぇ？？ご注文をどうぞ！！！！<br>
         <iframe height="230" width="200" src="https://koppepan-orange-game.github.io/game_daisuki/clicker_of_mugen_shop_tools.txt"></iframe>
+        <br><input type="text" id="ShopInputText" minlength="2" maxlength="2" size="16" placeholder="write number here"><button class="button" onclick="ShopBuyButton()">Buy</button>
       </p>
         <br><br><br><br><button class="button" id="BackToShop" onclick="GoToShop()">Back To Shop</button>
         </span>
         <br><br><br><br><button class="button" id="BackToCity" onclick="GoToCity()">Back To City</button>
   </p>
+  <hr noshade="true">
+      <span id="InShopScene">
+      <p>
+        <button class="button"onclick="GoToEquipWeapon()">Equip Weapon</button><br><br>
+        <button class="button"onclick="GoToEquipArmor()">Equip Armor</button><br><br>
+        <button class="button"onclick="GoToEquipTool()">Equip Tool</button>
+      </p>
+      <br><br><br><br><button class="button" id="BakcToShop" onclick="GoToShop()">Back To Shop</button>
+      </span>
+<hr noshade="true">
+      <span id="InShopScene">
+      <p>
+        <span id="AppearShops"></span><br>
+        <br><input type="text" id="ShopInputText" minlength="2" maxlength="2" size="16" placeholder="write number here"><button class="button" onclick="ShopEquipButton()">Equip</button>
+      </p>
+      <br><br><br><br><button class="button" id="BakcToShop" onclick="GoToShop()">Back To Shop</button>
+      </span>
+  <br><span id="SHOPlog"></span>
   <script>
+    let shopinputtext = 0;
     function ShopBuyWeapons(){
       document.getElementById('InShopScene').innerHTML = '';
     }
@@ -62,5 +89,395 @@
 function GoToShop(){
     document.getElementById('BattleScene').innerHTML = '<span>sorry. shop is not ready. please come back tomorrow.</span><br><br><br><button class="button" id="GoToCity" onclick="GoToCity()">Go To City</button>';
     }
+function ShopBuyButton(){
+  shopinputtext = document.getElementById('ShopInputText').value;
+  switch(shopinputtext){
+    case '01':
+      if(nowshop == 1){
+      if(money >= 20){money -= 20; haveweapons.push('木の棒');document.getElementById('SHOPlog').textContent = '木の棒を購入しました!';}
+      else{document.getElementById('SHOPlog').textContent = 'not enough money..';};
+      break;
+      } else if(nowshop == 2){
+      if(money >= 10){money -= 10; haveweapons.push('マスク');document.getElementById('SHOPlog').textContent = 'マスクを購入しました!';}
+      else{document.getElementById('SHOPlog').textContent = 'not enough money..';};
+      break;
+      } else if(nowshop == 3){
+      if(money >= 30){money -= 30; haveweapons.push('アスピリン');document.getElementById('SHOPlog').textContent = 'アスピリンを購入しました!';}
+      else{document.getElementById('SHOPlog').textContent = 'not enough money..';};
+      break;
+      }
+    case '02':
+      if(nowshop == 1){
+      if(money >= 50){money -= 50; haveweapons.push('木刀');document.getElementById('SHOPlog').textContent = '木刀を購入しました!';}
+      else{document.getElementById('SHOPlog').textContent = 'not enough money..';};
+      break;
+      } else if(nowshop == 2){
+      if(money >= 20){money -= 20; haveweapons.push('薄めの本');document.getElementById('SHOPlog').textContent = '薄い本を購入しました!';}
+      else{document.getElementById('SHOPlog').textContent = 'not enough money..';};
+      break;
+      } else if(nowshop == 3){
+      if(money >= 50){money -= 50; haveweapons.push('パブロン');document.getElementById('SHOPlog').textContent = 'パブロンを購入しました!';}
+      else{document.getElementById('SHOPlog').textContent = 'not enough money..';};
+      break;
+      }
+    case '03':
+      if(nowshop == 1){
+      if(money >= 100){money -= 100; haveweapons.push('竹刀');document.getElementById('SHOPlog').textContent = '竹刀を購入しました!';}
+      else{document.getElementById('SHOPlog').textContent = 'not enough money..';};
+      break;
+      } else if(nowshop == 2){
+      if(money >= 50){money -= 50; haveweapons.push('木の板');document.getElementById('SHOPlog').textContent = '木の板を購入しました!';}
+      else{document.getElementById('SHOPlog').textContent = 'not enough money..';};
+      break;
+      } else if(nowshop == 3){
+      if(money >= 100){money -= 100; haveweapons.push('トリプシン');document.getElementById('SHOPlog').textContent = 'トリプシンを購入しました!';}
+      else{document.getElementById('SHOPlog').textContent = 'not enough money..';};
+      break;
+      }
+    case '04':
+      if(nowshop == 1){
+      if(money >= 200){money -= 200; haveweapons.push('石ころ');document.getElementById('SHOPlog').textContent = '石ころを購入しました!';}
+      else{document.getElementById('SHOPlog').textContent = 'not enough money..';};
+      break;
+      } else if(nowshop == 2){
+      if(money >= 100){money -= 100; haveweapons.push('テッパン');document.getElementById('SHOPlog').textContent = 'テッパンを購入しました!';}
+      else{document.getElementById('SHOPlog').textContent = 'not enough money..';};
+      break;
+      } else if(nowshop == 3){
+      if(money >= 500){money -= 500; haveweapons.push('ルル');document.getElementById('SHOPlog').textContent = 'ルルを購入しました!';}
+      else{document.getElementById('SHOPlog').textContent = 'not enough money..';};
+      break;
+      }
+    case '05':
+      if(nowshop == 1){
+      if(money >= 300){money -= 300; haveweapons.push('大きな石');document.getElementById('SHOPlog').textContent = '大きな石を購入しました!';}
+      else{document.getElementById('SHOPlog').textContent = 'not enough money..';};
+      break;
+      } else if(nowshop == 2){
+      if(money >= 300){money -= 300; haveweapons.push('鍋の蓋');document.getElementById('SHOPlog').textContent = '鍋の蓋を購入しました!';}
+      else{document.getElementById('SHOPlog').textContent = 'not enough money..';};
+      break;
+      }
+    case '06':
+      if(nowshop == 1){
+      if(money >= 500){money -= 500; haveweapons.push('レンガ');document.getElementById('SHOPlog').textContent = 'レンガを購入しました!';}
+      else{document.getElementById('SHOPlog').textContent = 'not enough money..';};
+      break;
+      } else if(nowshop == 2){
+      if(money >= 500){money -= 500; haveweapons.push('厚めの本');document.getElementById('SHOPlog').textContent = '厚めの本を購入しました!';}
+      else{document.getElementById('SHOPlog').textContent = 'not enough money..';};
+      break;
+      }
+    case '07':
+      if(nowshop == 1){
+      if(money >= 20){money -= 20; haveweapons.push('薄めの紙');document.getElementById('SHOPlog').textContent = '薄めの紙を購入しました!';}
+      else{document.getElementById('SHOPlog').textContent = 'not enough money..';};
+      break;
+      } else if(nowshop == 2){
+      if(money >= 1000){money -= 1000; haveweapons.push('ドア');document.getElementById('SHOPlog').textContent = 'ドアを購入しました!';}
+      else{document.getElementById('SHOPlog').textContent = 'not enough money..';};
+      break;
+      }
+    case '08':
+      if(nowshop == 1){
+      if(money >= 77){money -= 77; haveweapons.push('カード');document.getElementById('SHOPlog').textContent = 'カードを購入しました!';}
+      else{document.getElementById('SHOPlog').textContent = 'not enough money..';};
+      break;
+    }
+    case '09':
+      if(nowshop == 1){
+      if(money >= 600){money -= 600; haveweapons.push('はさみ');document.getElementById('SHOPlog').textContent = 'はさみを購入しました!';}
+      else{document.getElementById('SHOPlog').textContent = 'not enough money..';};
+      break;
+      }
+    case '10':
+      if(nowshop == 1){
+      if(money >= 1000){money -= 1000; haveweapons.push('ナイフ');document.getElementById('SHOPlog').textContent = 'ナイフを購入しました!';}
+      else{document.getElementById('SHOPlog').textContent = 'not enough money..';};
+      break;
+      }
+    case '11':
+      if(nowshop == 3){
+      if(money >= 40){money -= 40; haveweapons.push('投げナイフ');document.getElementById('SHOPlog').textContent = '投げナイフを購入しました!';}
+      else{document.getElementById('SHOPlog').textContent = 'not enough money..';};
+      break;
+      } // 4 8 12 30
+    case '12':
+      if(nowshop == 3){
+      if(money >= 80){money -= 80; haveweapons.push('トリッキーな変数');document.getElementById('SHOPlog').textContent = 'トリッキーな変数を購入しました!にはははは〜!!';}
+      else{document.getElementById('SHOPlog').textContent = 'not enough money..';};
+      break;
+      }
+    case '13':
+      if(nowshop == 3){
+      if(money >= 120){money -= 120; haveweapons.push('援護射撃');document.getElementById('SHOPlog').textContent = '援護射撃ライセンスを購入しました!';}
+      else{document.getElementById('SHOPlog').textContent = 'not enough money..';};
+      break;
+      }
+    case '14':
+      if(nowshop == 3){
+      if(money >= 300){money -= 300; haveweapons.push('ガラスの破片');document.getElementById('SHOPlog').textContent = 'ガラスの破片を購入しました!';}
+      else{document.getElementById('SHOPlog').textContent = 'not enough money..';};
+      break;
+      }
+    default:
+      document.getElementById('SHOPlog').textContent = 'id doesnt exist...';
+      break;
+  }
+  SHOPmoneytekiou();
+  document.getElementById('ShopInputText').value = '';
+}
+function SHOPmoneytekiou(){
+  document.getElementById('MONEY').textContent = money + '¢';
+}
+SHOPmoneytekiou();
+
+function GoToEquipWeapon(){
+  nowshop = 4;
+  appearweapons = '';
+  x = 0;
+  if(haveweapons.includes("木の棒")){x += 1;}
+  if(haveweapons.includes("木刀")){x += 10;}
+  if(haveweapons.includes("竹刀")){x += 100;}
+  if(haveweapons.includes("石ころ")){x += 1000;}
+  if(haveweapons.includes("大きな石")){x += 10000;}
+  if(haveweapons.includes("レンガ")){x += 100000;}
+  if(haveweapons.includes("薄めの紙")){x += 1000000;}
+  if(haveweapons.includes("カード")){x += 10000000;}
+  if(haveweapons.includes("はさみ")){x += 100000000;}
+  if(haveweapons.includes("ナイフ")){x += 1000000000;}
+  if(x >= 1000000000){x -= 1000000000; appearweapons = '10 ナイフ';}
+  if(x >= 100000000){x -= 100000000; appearweapons = '09 はさみ'+ '<br>' + appearweapons;}
+  if(x >= 10000000){x -= 10000000; appearweapons = '08 カード'+ '<br>' + appearweapons;}
+  if(x >= 1000000){x -= 1000000; appearweapons = '07 薄めの紙'+ '<br>' + appearweapons;}
+  if(x >= 100000){x -= 100000; appearweapons = '06 レンガ' + '<br>' + appearweapons;}
+  if(x >= 10000){x -= 10000; appearweapons = '05 大きな石' + '<br>' + appearweapons;}
+  if(x >= 1000){x -= 1000; appearweapons = '04 石ころ' + '<br>' + appearweapons;}
+  if(x >= 100){x -= 100; appearweapons = '03 竹刀' + '<br>' + appearweapons;}
+  if(x >= 10){x -= 10; appearweapons = '02 木刀' + '<br>' + appearweapons;}
+  if(x >= 1){x -= 1; appearweapons = '01 木の棒' + '<br>' + appearweapons;}
+  document.getElementById('AppearShops').innerHTML = appearweapons;
+}
+function GoToEquipArmor(){
+  nowshop = 5;
+  appeararmors = '';
+  x = 0;
+  if(havearmors.includes("マスク")){x += 1;}
+  if(havearmors.includes("薄めの本")){x += 10;}
+  if(havearmors.includes("木の板")){x += 100;}
+  if(havearmors.includes("テッパン")){x += 1000;}
+  if(havearmors.includes("鍋の蓋")){x += 10000;}
+  if(havearmors.includes("厚めの本")){x += 100000;}
+  if(havearmors.includes("ドア")){x += 1000000;}
+  if(x >= 1000000){x -= 1000000; appeararmors = '07 ドア'+ '<br>' + appeararmors;}
+  if(x >= 100000){x -= 100000; appeararmors = '06 厚めの本'+ '<br>' + appeararmors;}
+  if(x >= 10000){x -= 10000; appeararmors = '05 鍋の蓋'+ '<br>' + appeararmors;}
+  if(x >= 1000){x -= 1000; appeararmors = '04 テッパン'+ '<br>' + appeararmors;}
+  if(x >= 100){x -= 100; appeararmors = '03 木の板'+ '<br>' + appeararmors;}
+  if(x >= 10){x -= 10; appeararmors = '02 薄めの本'+ '<br>' + appeararmors;}
+  if(x >= 1){x -= 1; appeararmors = '01 マスク'+ '<br>' + appeararmors;}
+  document.getElementById('AppearShops').innerHTML = appeararmors;
+}
+let appearweapons = '';
+let appeararmors = '';
+let appeartools = '';
+function ShopEquip(){
+  appearweapons = '';
+  x = 0;
+  if(haveweapons.includes("木の棒")){x += 1;}
+  if(haveweapons.includes("木刀")){x += 10;}
+  if(haveweapons.includes("竹刀")){x += 100;}
+  if(haveweapons.includes("石ころ")){x += 1000;}
+  if(haveweapons.includes("大きな石")){x += 10000;}
+  if(haveweapons.includes("レンガ")){x += 100000;}
+  if(haveweapons.includes("薄めの紙")){x += 1000000;}
+  if(haveweapons.includes("カード")){x += 10000000;}
+  if(haveweapons.includes("はさみ")){x += 100000000;}
+  if(haveweapons.includes("ナイフ")){x += 1000000000;}
+  if(x >= 1000000000){x -= 1000000000; appearweapons = '10 ナイフ';}
+  if(x >= 100000000){x -= 100000000; appearweapons = '09 はさみ'+ '<br>' + appearweapons;}
+  if(x >= 10000000){x -= 10000000; appearweapons = '08 カード'+ '<br>' + appearweapons;}
+  if(x >= 1000000){x -= 1000000; appearweapons = '07 薄めの紙'+ '<br>' + appearweapons;}
+  if(x >= 100000){x -= 100000; appearweapons = '06 レンガ' + '<br>' + appearweapons;}
+  if(x >= 10000){x -= 10000; appearweapons = '05 大きな石' + '<br>' + appearweapons;}
+  if(x >= 1000){x -= 1000; appearweapons = '04 石ころ' + '<br>' + appearweapons;}
+  if(x >= 100){x -= 100; appearweapons = '03 竹刀' + '<br>' + appearweapons;}
+  if(x >= 10){x -= 10; appearweapons = '02 木刀' + '<br>' + appearweapons;}
+  if(x >= 1){x -= 1; appearweapons = '01 木の棒' + '<br>' + appearweapons;}
+  document.getElementById('AppearShops').innerHTML = appearweapons;
+  appeararmors = '';
+  x = 0;
+  if(havearmors.includes("マスク")){x += 1;}
+  if(havearmors.includes("薄めの本")){x += 10;}
+  if(havearmors.includes("木の板")){x += 100;}
+  if(havearmors.includes("テッパン")){x += 1000;}
+  if(havearmors.includes("鍋の蓋")){x += 10000;}
+  if(havearmors.includes("厚めの本")){x += 100000;}
+  if(havearmors.includes("ドア")){x += 1000000;}
+  if(x >= 1000000){x -= 1000000; appeararmors = '07 ドア'+ '<br>' + appeararmors;}
+  if(x >= 100000){x -= 100000; appeararmors = '06 厚めの本'+ '<br>' + appeararmors;}
+  if(x >= 10000){x -= 10000; appeararmors = '05 鍋の蓋'+ '<br>' + appeararmors;}
+  if(x >= 1000){x -= 1000; appeararmors = '04 テッパン'+ '<br>' + appeararmors;}
+  if(x >= 100){x -= 100; appeararmors = '03 木の板'+ '<br>' + appeararmors;}
+  if(x >= 10){x -= 10; appeararmors = '02 薄めの本'+ '<br>' + appeararmors;}
+  if(x >= 1){x -= 1; appeararmors = '01 マスク'+ '<br>' + appeararmors;}
+  document.getElementById('AppearShops').innerHTML = appeararmors;
+
+}
+function ShopEquipButton(){
+  shopinputtext = document.getElementById('ShopInputText').value;
+  switch(shopinputtext){
+    case '01':
+      if(nowshop == 4){
+      if(haveweapons.includes("木の棒")){
+        document.getElementById('SHOPlog').textContent = 'あなたは木の棒を装備しました！';
+        equipweapon = 1;
+        weaponpower = 1;
+      }
+      else{document.getElementById('SHOPlog').textContent = 'you dont have it!';}
+      break;
+      } else if(nowshop == 5){
+      if(havearmors.includes("マスク")){
+        document.getElementById('SHOPlog').textContent = 'あなたはマスクを装備しました！';
+        equiparmor = 1;
+        armorshell = 0;
+      }
+      else{document.getElementById('SHOPlog').textContent = 'you dont have it!';}
+      break;
+      };
+    case '02':
+      if(nowshop == 4){
+      if(haveweapons.includes("木刀")){
+        document.getElementById('SHOPlog').textContent = 'あなたは木刀を装備しました！';
+        equipweapon = 2;
+        weaponpower = 2;
+      }
+      else{document.getElementById('SHOPlog').textContent = 'you dont have it!';}
+      break;
+      } else if(nowshop == 5){
+      if(havearmors.includes("薄めの本")){
+        document.getElementById('SHOPlog').textContent = 'あなたは薄い本を装備しました！';
+        equiparmor = 2;
+        armorshell = 0;
+      }
+      else{document.getElementById('SHOPlog').textContent = 'you dont have it!';}
+      break;
+      };
+    case '03':
+      if(nowshop == 4){
+        if(haveweapons.includes("竹刀")){
+          document.getElementById('SHOPlog').textContent = 'あなたは竹刀を装備しました！';
+          equipweapon = 3;
+        weaponpower = 3;
+        }
+        }
+      else if(nowshop == 5){
+      if(havearmors.includes("木の板")){
+        document.getElementById('SHOPlog').textContent = 'あなたは木の板を装備しました！';
+        equiparmor = 3;
+        armorshell = 1;
+      }
+      else{document.getElementById('SHOPlog').textContent = 'you dont have it!';}
+      break;
+      };
+    case '04':
+      if(nowshop == 4){
+        if(haveweapons.includes("石ころ")){
+          document.getElementById('SHOPlog').textContent = 'あなたは石ころを装備しました！';
+          equipweapon = 4;
+          weaponpower = 4;
+        } 
+        } 
+      else if(nowshop == 5){
+      if(havearmors.includes("テッパン")){
+        document.getElementById('SHOPlog').textContent = 'あなたはテッパンを装備しました！';
+        equiparmor = 4;
+        armorshell = 2;
+      }
+      else{document.getElementById('SHOPlog').textContent = 'you dont have it!';}
+      break;
+      };
+    case '05':
+      if(nowshop == 4){
+        if(haveweapons.includes("大きな石")){
+          document.getElementById('SHOPlog').textContent = 'あなたは大きな石を装備しました！';
+          equipweapon = 5;
+          weaponpower = 5;
+        }
+        }
+      else if(nowshop == 5){
+      if(havearmors.includes("鍋の蓋")){
+        document.getElementById('SHOPlog').textContent = 'あなたは鍋の蓋を装備しました！';
+        equiparmor = 5;
+        armorshell = 3;
+      }
+      else{document.getElementById('SHOPlog').textContent = 'you dont have it!';}
+      break;
+      };
+    case '06':
+      if(nowshop == 4){
+        if(haveweapons.includes("レンガ")){
+          document.getElementById('SHOPlog').textContent = 'あなたはレンガを装備しました！';
+          equipweapon = 6;
+          weaponpower = 6;
+        }
+
+        }
+    else if(nowshop == 5){
+      if(haveweapons.includes("厚めの本")){
+        document.getElementById('SHOPlog').textContent = 'あなたは厚めの本を装備しました！';
+        equiparmor = 6;
+        armorshell = 4;
+      }
+      else{document.getElementById('SHOPlog').textContent = 'you dont have it!';}
+      break;
+      };
+    case '07':
+      if(nowshop == 4){
+        if(haveweapons.includes("薄めの紙")){
+          document.getElementById('SHOPlog').textContent = 'あなたは薄めの紙を装備しました！';
+          equipweapon = 7;
+          weaponpower = 1;
+        }
+        }
+      else if(nowshop == 5){
+        if(haveweapons.includes("ドア")){
+          document.getElementById('SHOPlog').textContent = 'あなたはドアを装備しました！';
+          equiparmor = 7;
+          armorshell = 5;
+        }
+        else{document.getElementById('SHOPlog').textContent = 'you dont have it!';}
+        break;
+        };
+    case '08':
+      if(nowshop == 4){
+        if(haveweapons.includes("カード")){
+          document.getElementById('SHOPlog').textContent = 'あなたはカードを装備しました！';
+          equipweapon = 8;
+          weaponpower = 1;
+        }
+          break;
+        };
+    case '09':
+      if(nowshop == 4){
+        if(haveweapons.includes("はさみ")){
+          document.getElementById('SHOPlog').textContent = 'あなたは鉄の棒を装備しました！';
+          equipweapon = 9;
+          weaponpower = 7;
+        }
+          break;
+        };
+    case '10':
+      if(nowshop == 4){
+        if(haveweapons.includes("ナイフ")){
+          document.getElementById('SHOPlog').textContent = 'あなたは鉄の棒を装備しました！';
+          equipweapon = 10;
+          weaponpower = 8;
+        }
+          break;
+        };
+    }
+  document.getElementById('ShopInputText').value = '';
+}
   </script>
  </body>

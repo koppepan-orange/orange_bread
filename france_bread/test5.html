@@ -1,11 +1,18 @@
 <!DOCTYPE html>
-<html><head><meta charset="UTF-8"><title>nanka</title></head>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>link site tamesi</title>
+</head>
 <body>
-
-<script>
-    function drawburret(){
-        
-    }
-</script>
+    <details><summary>link site</summary>
+    <input type="text" id="InputIdLinkDesu" placeholder="write link here"><button onclick="InputToOutputLink()">Go</button><br>
+    <iframe id="OutputIdLinkDesu" width="100%" height="600" src="about:blank"></iframe>
+    <script>
+        function InputToOutputLink() {
+            document.getElementById("OutputIdLinkDesu").src = document.getElementById("InputIdLinkDesu").value;
+        }
+    </script>
+    </details>
 </body>
 </html>
