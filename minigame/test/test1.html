@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+    .cards-container {
+        display: flex;
+        flex-direction: row;
+        justify-content: space-around; /* カードを均等に間隔を空けて配置します */
+    }
+    
+    .card {
+        width: 100px;
+        height: 115px;
+        border-radius: 8px;
+        overflow: hidden;
+        margin: 0 5px; /* カード間のスペースを調整します */
+        box-shadow: 0 4px 15px rgba(0,0,0,.2);
+    }
+      .card__textbox{
+        width: 100%;
+        height: auto;
+        padding: 2px 10px;
+        background: #fff;
+        box-sizing: border-box;
+      }
+      .card__textbox > * + *{
+        margin-top: 2px;
+      }
+      .card__titletext{
+        font-size: 12px;
+        font-weight: bold;
+        line-height: 125%;
+      }
+      .card__overviewtext{
+        font-size: 12px;
+        line-height: 150%;
+      }
+      </style>
+</head>
+<body>
+    <div class="cards-container">
+        <div class="card">
+            <div class="card__textbox">
+                <div class="card__titletext"><span id="PlayerName">grean slime</span></div>
+                <div class="card__overviewtext">
+                    HP:<span id="PlayerHealth">100</span>/<span id="PlayerMaxHealth">100</span><br>
+                    MP:<span id="PlayerMp">100</span>/<span id="PlayerMaxMp">100</span><br>
+                    LV:<span id="PlayerLevel">1</span>
+                </div>
+            </div>
+        </div>
+        <!-- 他のカードを追加 -->
+    </div>
+</body>
+</html>
