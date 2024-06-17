@@ -15,6 +15,7 @@ let playershell = 1;
 let playermp = 0;
 let playermaxmp = 10;
 let playercrit = 0.03; //これが確率。会心率ってやつだね
+let playercritdmg = 1.5; //これが倍率。会心ダメージってやつだね
 let enemyhealth = 0;
 let enemymaxhealth = 0;
 let enemyattack = 0;
@@ -49,10 +50,7 @@ let enemynames =  ["ピンクな先輩", "ブルーな後輩", "過激派のハ�
                    // 名前の元!紹介! 1行目-cybercodeonline 2行目-東方ロストワード 3行目-ブルーアーカイブ 4行目-スプラトゥーン3 & 勇者あるある
 let enemyprefixe1 = 0;
 let enemyprefixe2 = 0;
-let enemyprefixes1 = ['コッペパン好きな','猫耳の','メイド服を着た','かっこいい','ボカロ好きの','頭のおかしくなった','マカロンが好きな','ダークモカチップクリームフラペチーノを持った','猫になった'
-                     ,'ドンファイのマスターフルコンを目指す','どっちかっていうと猫派な','犬が嫌いな','借り暮らしの','その日暮らしの','手に何か持ってないと落ち着かない','元','課題に追われる','白水色が好きな','承認欲求高めの'
-                     ,'「ぼっち・ざ・ろっく」が好きな', '「よふかしのうた」が好きな','「らき☆すた」が好きな','Minecraftが好きな','弾幕ゲームが好きな','ブルーアーカイブが好きな','第五人格が好きな','プロセカが好きな','#コンパスが好きな'
-                     ,];
+let enemyprefixes1 = ['かわいい','かっこよくない','ナルシストな','ユーモアがつまらない','滑舌が悪い','声が高い','ゲームが好きな','頭のいい','常に寝ている'];
 let enemyprefixes2 = ['Discord信者','勇者','魔王','ゾンビ','先生','ドクター','マスター','西の高校生探偵','東の高校生探偵'
                      ,'ツインテ狩り','モス通い','ルフレ使い','真のヒロイン','バカ','天才','戦犯','這い寄る脅威'
                      ,'Mac依存症','ぬいぐるみ依存症','レモンティー依存症','ヘッドフォン依存症','ZEPETO依存症','つぶグミ依存症','黒ピンク依存症','白水色依存症','モバイルバッテリー依存症']
@@ -93,7 +91,10 @@ function delay(ms) {
 async function begin(){
     if (document.getElementById('NameInputText').value !== ''){playername = document.getElementById('NameInputText').value;}
     document.getElementById('PlayerName').textContent = playername;
-    if (playername == 'greenslime'){
+    if(playername == 'player'){
+        playernametrick = 0;
+        document.getElementById('MakePlayerZone').innerHTML = 'Make Player Zone<br><button onclick="releaseMakePlayer()">release(230€)</button>';
+    }else if (playername == 'greenslime'){
         playernametrick = 1;
         document.getElementById('Skillbutton').innerHTML = '<button class="button" onclick="skillact()">skill</button>';
         document.getElementById('ButtonStyle').textContent = '.button{border: 2px solid #4da856;padding: 2px 3px;background: #bfffc5;cursor: pointer;}';
@@ -1918,3 +1919,9 @@ function BackToCityFromBossBattle(){
     playerlevel += lowedplayerlevel;
     document.getElementById('BattleScene').innerHTML = '<button class="button" id="GoToBattle" onclick="GoToBattle()">Go To Battle</button><br><br><br><button class="button" id="GoToBossBattle" onclick="GoToBossBattle()">Go To Boss Battle</button><br><br><br><button class="button" id="GoToCityBattle" onclick="GoToShop()">Go To Shop</button><br><br><br>';
 } // 色々下げられてたら戻すよっていう動き。戻さない敵とかもいていいかも..っておもったけどそれはさすがにあれか？
+function releaseMakePlayer(){
+    document.getElementById('MakePlayerZone').innerHTML = '<input class="button" id="NameInputText" type="text" maxlength="10" placeholder="write name here"><button class="button" onclick="MakePlayer()">make start</button>';
+}
+function MakePlayer(){
+    document.getElementById('MakePlayerZone').innerHTML = '<form><fieldset><legend>choose EXskill</legend><div><input type="radio" id="EXchoose1" name="EXSKILL" value="EX1"><label for="EXchoose1">敵HPを半分に</label><input type="radio" id="EXchoosee2" name="EXSKILL" value="EX2"><label for="EXchoose2">次の攻撃4倍に</label><input type="radio" id="EXchoose3" name="EXSKILL" value="EX3"><label for="EXchoose3">タネマシンガン</label><input type="radio" id="EXchoose4" name="EXSKILL" value="EX3"><label for="EXchoose4">爆弾投げ</label></div><div align="center"><button type="submit">決定</button></div></fieldset></form> <form><fieldset><legend>choose NSskill</legend><div><input type="radio" id="NSchoose1" name="NSSKILL" value="NS1"><label for="NSchoose1">敵を毒に</label><input type="radio" id="NSchoosee2" name="NSSKILL" value="NS2"><label for="NSchoose2">敵を凍結</label><input type="radio" id="NSchoose3" name="NSSKILL" value="NS3"><label for="NSchoose3">敵をスタン</label><input type="radio" id="NSchoose4" name="NSSKILL" value="NS3"><label for="NSchoose4">次攻撃2倍</label></div><div align="center"><button type="submit">決定</button></div></fieldset></form><form><fieldset><legend>choose SSskill</legend><div><input type="radio" id="SSchoose1" name="SSSKILL" value="SS1"><label for="SSchoose1">敵がデバフになったら攻撃力上昇</label><input type="radio" id="SSchoosee2" name="SSSKILL" value="SS2"><label for="SSchoose2">EX後攻撃力増加</label><br><input type="radio" id="SSchoose3" name="SSSKILL" value="SS3"><label for="SSchoose3">自分の体力半分以下なら攻撃力上昇</label><input type="radio" id="SSchoose4" name="SSSKILL" value="SS3"><label for="SSchoose4">相手の体力半分以下なら追撃</label></div><div align="center"><button type="submit">決定</button></div></fieldset></ form>';
+}

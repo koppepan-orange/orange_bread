@@ -103,7 +103,7 @@ function begin(){
         document.getElementById('ButtonStyle').textContent = '.button{border: 2px solid #4f4c7d;padding: 2px 3px;background: #e8e8e8;cursor: pointer;}';
         document.getElementById('AdditionalPlayerPoint').innerHTML = '<br><i>エネルギー:</i><i id="AliceEnelgy"></i>';
         alicetekiou()
-        // "toki"(トキ)[ブルーアーカイブ]
+        // "alice"(アリス)[ブルーアーカイブ]
         // EX 敵に攻撃力の2倍のダメージ。エネルギーの溜め具合によってダメージ量は3倍/4倍に増加します。
         // 「世界の 法則が 崩壊します！」
         // NS 2の倍数のターンの時、エネルギーを1チャージする。(最大2)
@@ -116,7 +116,7 @@ function begin(){
         document.getElementById('Skillbutton').innerHTML = '<button class="button" onclick="skillact()">skill</button>';
         document.getElementById('ButtonStyle').textContent = '.button{border: 2px solid #3acbe8;padding: 2px 3px;background: #ffffff;cursor: pointer;}';
         document.getElementById('AdditionalPlayerPoint').innerHTML = '';
-        // "alice"(アリス)[ブルーアーカイブ]
+        // "toki"(トキ))[ブルーアーカイブ]
         // EX 重装甲を着て、シールドを獲得する。
         // この状態の時にslashを使うと通常の1.5倍のダメージ。しかし3回使うと重装甲は取れてしまう。
         // 「システム：アビ・エシュフ」

@@ -72,8 +72,6 @@ function begin(){
 }
 function NS(){
     if(playername == koppepanorange && (turncount % 3) == 2){
-        playerskillbuff = 1;
-        bufftekiou()
         
     }
 }
@@ -674,8 +672,8 @@ function playerlevelup(){
         document.getElementById('PlayerHealth').textContent = playerhealth;
         document.getElementById('PlayerMaxHealth').textContent = playermaxhealth;
         document.getElementById('log').textContent = 'レベルアップ!!';
-        window.setTimeout(playersutefuri, 1000)
-    } else window.setTimeout(nextenemy, 1000)
+        window.setTimeout(playersutefuri, 1000);
+    } else window.setTimeout(nextenemy, 1000);
 }
 function nextenemy() {
     turncount = 0;
@@ -688,7 +686,7 @@ function nextenemy() {
     enemydebuff = 0;
     bufftekiou()
     enemylevel += (Math.floor(Math.random() * 3) - 1); // -1 ~ +1 
-    if (enemylevel < 1){enemylevel = 1}
+    if (enemylevel < 1){enemylevel = 1};
     enemymaxhealth += 1;
     enemyhealth = enemymaxhealth;
     enemyname = 0;
@@ -726,7 +724,7 @@ function defeat() {
     document.getElementById('log').textContent = saydefeats[Math.floor(Math.random() * saydefeats.length)];
     window.setTimeout(reset, 2000)
 }
-async function errorcheck(){if(playerattack == Infinity || playerdefense == Infinity || playerhealth == Infinity ||  playermaxhealth == Infinity || playerlevel == Infinity || playerpower == Infinity || playermaxmp == Infinity || playershell == Infinity || isNaN(playerhealth) || isNaN(playermaxhealth) || isNaN(playerattack) || isNaN(playerdefense) || isNaN(playermaxmp) || isNaN(playerpower) || isNaN(playershell) || isNaN(playerlevel) || potion == Infinity || money == Infinity || bomb == Infinity || skipcard == Infinity || isNaN(potion) || isNaN(money) || isNaN(bomb) || isNaN(skipcard)){document.getElementById('log').textContent = 'error100が発生しました。'; await delay(1000); document.getElementById('log').textContent = 'リブートを開始します。'; await delay(1000); open('about:blank', '_self').close();}} //おっとこれは...?}
+async function errorcheck(){if(playerattack == Infinity || playerdefense == Infinity || playerhealth == Infinity ||  playermaxhealth == Infinity || playerlevel == Infinity || playerpower == Infinity || playermaxmp == Infinity || playershell == Infinity || isNaN(playerhealth) || isNaN(playermaxhealth) || isNaN(playerattack) || isNaN(playerdefense) || isNaN(playermaxmp) || isNaN(playerpower) || isNaN(playershell) || isNaN(playerlevel) || potion == Infinity || bomb == Infinity || skipcard == Infinity || isNaN(potion) || isNaN(bomb) || isNaN(skipcard)){document.getElementById('log').textContent = 'error100が発生しました。'; await delay(1000); document.getElementById('log').textContent = 'リブートを開始します。'; await delay(1000); open('about:blank', '_self').close();}} //おっとこれは...?}
 function StatusAppear() {
     document.getElementById('StatusAppearDisappear').innerHTML = '<button class="button" id="StatusButton" onclick="StatusDisappear()">status</button>';
     document.getElementById('Status').textContent = '攻撃力:' + playerattack + '   防御力:' + playerdefense + '   経験値:' + playerexp +'   魔力:' + playermp;
@@ -735,3 +733,66 @@ function StatusDisappear() {
     document.getElementById('StatusAppearDisappear').innerHTML = '<button class="button" id="StatusButton" onclick="StatusAppear()">status</button>';
     document.getElementById('Status').textContent = '';
 }
+//もの動かしますゾーン始まり
+let px = 0;
+let py = 0;
+let enemy1x = 0;
+let enemy1y = 0;
+$(document).keydown(function(e) {
+  if (e.which === 39) { // Right arrow key code
+    px += 10;
+    if(px > 250){px = 250};
+    $('.moving-div').css('left', px + 'px');
+  }
+  if (e.which === 37) { // Right arrow key code
+    px -= 10;
+    if(px < 0){px = 0};
+    $('.moving-div').css('left', px + 'px');
+  }
+  if (e.which === 38) { // Right arrow key code
+    py -= 10;
+    if(py < 0){py = 0};
+    $('.moving-div').css('top', py + 'px');
+  }
+  if (e.which === 40) { // Right arrow key code
+    py += 10;
+    if(py > 250){py = 250};
+    $('.moving-div').css('top',py + 'px');
+  }
+  if (e.which === 90) { // Right arrow key code
+    if(px == enemy1x && py == enemy1y){
+        
+    }
+}
+});
+const CANVAS = document.getElementById('myCanvas');
+const CANVASctx = CANVAS.getContext('2d');
+let CANVAStextX = 10; // テキストの初期X座標
+let CANVAStextY = 50; // テキストの初期Y座標
+let CANVASspeed = 2; // テキストの移動速度
+
+        function drawText() {
+            CANVASctx.clearRect(0, 0, canvas.width, canvas.height);
+            CANVASctx.font = '10px Arial';
+            CANVASctx.fillStyle = 'rgb(0,0,0)';
+            CANVASctx.fillText('Hello, World!', CANVAStextX, CANVAStextY);
+        }
+
+        function moveText() {
+            var dx = 0;
+            var dy = 0;
+            if (keysPressed['ArrowLeft']) {dx -= CANVASspeed;}
+            if (keysPressed['ArrowRight']) {dx += CANVASspeed;}
+            if (keysPressed['ArrowUp']) {dy -= CANVASspeed;}
+            if (keysPressed['ArrowDown']) {dy += CANVASspeed;}
+            if (dx !== 0 && dy !== 0) {
+                // 対角線上の移動の場合、移動量を1/root(2)倍にする
+                var diagonalFactor = 1 / Math.sqrt(2);
+                dx *= diagonalFactor;
+                dy *= diagonalFactor;
+            }
+            CANVAStextX += dx;
+            CANVAStextY += dy;
+            drawText();
+        }
+//もの動かしますゾーン終わり

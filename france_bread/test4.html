@@ -6,14 +6,14 @@
     <title>Canvasに文字を描画して斜めに動かす</title>
 </head>
 <body>
-    <canvas id="myCanvas" width="400" height="200" style="border:1px solid black;"></canvas>
+    <canvas id="myCanvas" width="500" height="500" style="border:1px solid black;"></canvas>
 
     <script>
         var canvas = document.getElementById('myCanvas');
         var ctx = canvas.getContext('2d');
         var textX = 10; // テキストの初期X座標
         var textY = 50; // テキストの初期Y座標
-        var speed = 5; // テキストの移動速度
+        var speed = 2; // テキストの移動速度
         var keysPressed = {}; // 押されているキーの状態を保持するオブジェクト
 
         function drawText() {
@@ -28,20 +28,12 @@
             var dy = 0;
 
             // 左右方向の移動量を計算
-            if (keysPressed['ArrowLeft']) {
-                dx -= speed;
-            }
-            if (keysPressed['ArrowRight']) {
-                dx += speed;
-            }
+            if (keysPressed['ArrowLeft']) {dx -= speed;}
+            if (keysPressed['ArrowRight']) {dx += speed;}
 
             // 上下方向の移動量を計算
-            if (keysPressed['ArrowUp']) {
-                dy -= speed;
-            }
-            if (keysPressed['ArrowDown']) {
-                dy += speed;
-            }
+            if (keysPressed['ArrowUp']) {dy -= speed;}
+            if (keysPressed['ArrowDown']) {dy += speed;}
 
             // 斜め方向の移動量を計算
             if (dx !== 0 && dy !== 0) {
