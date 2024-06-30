@@ -1,69 +1,62 @@
 <!DOCTYPE html>
-<html lang="ja">
+<html lang='ja'>
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>弾幕ゲーム</title>
-  <style>
-    body {
-      margin: 0;
-      padding: 0;
-      overflow: hidden;
-    }
-    #player {
-      position: absolute;
-      width: 50px;
-      height: 50px;
-      background-color: blue;
-    }
-    .bullet {
-      position: absolute;
-      width: 10px;
-      height: 10px;
-      background-color: red;
-    }
-  </style>
+    <meta charset='UTF-8'>
+    <meta name='viewport' content='width=device-width, initial-scale=1.0'>
+    <title>対話ゲーム</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f0f0f0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+        .dialogue-box {
+            width: 50%; 
+            padding: 20px;
+            background-color: #fff;
+            border: 2px solid #000;
+            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+        }
+    </style>
 </head>
 <body>
-  <div id="player"></div>
-  <script>
-    const player = document.getElementById('player');
-    let playerX = 0;
-    let playerY = 0;
+    <div class='dialogue-box' id='dialogueBox'>
+        <span id='message1'>ここにメッセージが表示されます。</span><br>
+        <span id='message2'>ここにメッセージが表示されます。</span>
+    </div>
 
-    document.addEventListener('mousemove', function(event) {
-      playerX = event.clientX - player.offsetWidth / 2;
-      playerY = event.clientY - player.offsetHeight / 2;
-      player.style.left = playerX + 'px';
-      player.style.top = playerY + 'px';
+    <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      
+    let firstmessages1 = ['お、よく来たね！','ここでは.....','うーん..','楽しみたかったら楽しんでね〜！'];
+    let firstmessages2 = ['(zキーで進みます)','','やっぱめんどいから説明は無しで！','あ、ゆっくりしていってね！'];
+
+    let readmessage = 0;
+
+    const dialogueBox = document.getElementById('dialogueBox');
+    const msgdesu1 = document.getElementById('message1');
+    const msgdesu2 = document.getElementById('message2');
+
+    function NextMessage(){msgdesu1.textContent = firstmessages1[readmessage]; msgdesu2.textContent = firstmessages2[readmessage];}
+    document.addEventListener('keydown', (event) => {
+        if (event.key === 'z') {
+            readmessage++;
+            if (readmessage < firstmessages1.length) {
+                NextMessage();
+            } else {
+                msgdesu1.textContent = 'これが最後のメッセージです。'; // 全てのメッセージを表示し終えた場合の処理
+                msgdesu2.textContent = 'ctrl+rを押したらいいんじゃないかな!';
+            }
+        }
     });
+    NextMessage(); // 初期メッセージを表示
 
-    function createBullet() {
-      const bullet = document.createElement('div');
-      bullet.className = 'bullet';
-      bullet.style.left = Math.random() * window.innerWidth + 'px';
-      bullet.style.top = '0px';
-      document.body.appendChild(bullet);
+});
 
-      const bulletInterval = setInterval(function() {
-        const bulletRect = bullet.getBoundingClientRect();
-        if (bulletRect.top > window.innerHeight) {
-          clearInterval(bulletInterval);
-          bullet.remove();
-        }
-        const dx = playerX + player.offsetWidth / 2 - bulletRect.left;
-        const dy = playerY + player.offsetHeight / 2 - bulletRect.top;
-        const distance = Math.sqrt(dx * dx + dy * dy);
-        if (distance < player.offsetWidth / 2 + bullet.offsetWidth / 2) {
-          clearInterval(bulletInterval);
-          bullet.remove();
-          alert('ゲームオーバー！');
-        }
-        bullet.style.top = bulletRect.top + 20 + 'px';
-      }, 30);
-    }
-
-    setInterval(createBullet, 250);
-  </script>
+    </script>
 </body>
 </html>

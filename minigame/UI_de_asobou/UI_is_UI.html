@@ -4,22 +4,173 @@
   <meta charset="UTF-8">
   <title>Dating games</title>
   <script src="UIisUI-moromoro.js"></script>
-  <style>
-    @font-face{font-family:comicsans; src:url('Ldfcomicsans-jj7l.ttf');}
-    *{font-family:comicsans; margin:0 auto; text-align:center;}
-    .card{
-      width: 100px;
-      height: 115px;
-      border-radius: 8px;
-      overflow: hidden;
-      margin: 0 5px;
-    }
-  </style>
+  <link href="UIisUI-moromoro.css" rel="stylesheet" type="text/css" media="all">
 </head>
 <body>
   <style id="ButtonStyle"></style>
-  <br><hr noshade="true"><br>
-  <input id="InputPlayername" type="text" placeholder="white here name"><button onclick="start()">Go</button>
-  <div id="GameZone" class="card"></div>
+  <hr noshade="true"><br>
+  <span id="SuguKieru"><input id="InputPlayername" type="text" placeholder="white here name"><br></span>
+  <div id="GameZone">
+    <p id="TextBox">
+      <span id="CharacterName">コッペくん</span>
+      <br><span id="serif1">名前を入力して始めてね！</span>
+      <br><span id="serif2">まあ、でも入力しなくてもいいよ！</span>
+      <br><span id="serif3">その場合"あなた"になるのぜ！！</span>
+    </p>
+    <span id="UItop">top desu</span><!--ここに立ち絵とか入るかもね zomusanとかセリフ全部考えてくれるなら入れれるよ さすがにあんまりしらない人が書いてもあんまりだからね-->
+    <span id="UIleft">left desu</span><!--情報とか載せる予定-->
+    <span id="UIright">right</span><!--ここどうしよ...-->
+    <span id="UIbottom">buttom desu</span><!--ここにはBGM選択機能とか入れたい。もう何が元か何かわかるっしょw-->
+    <span id="Choicese"></span>
+  </div>
 </body>
+<style>
+  @font-face{font-family:comicsans; src:url('Ldfcomicsans-jj7l.ttf');}
+*{font-family:comicsans; margin:0 auto; text-align:center;}
+#UItop{
+    position: fixed;
+    top: 65px;
+    left: 300px;
+    right: 300px;
+    width: 600px;
+    height: 304px;
+    border-top: 2px solid blue;
+    border-bottom: 2px solid purple;
+    border-left: 2px solid blue;
+    border-right: 2px solid purple;
+    padding: 10px;
+    text-align: left !important;/*一番優先するやつ*/
+    z-index: 1;
+}
+#TextBox{
+    position: fixed;
+    top: 392.5px;
+    left: 300px;
+    right: 300px;
+    width: 600px;
+    border-top: 2px solid blue;
+    border-bottom: 2px solid purple;
+    border-left: 2px solid blue;
+    border-right: 2px solid purple;
+    padding: 10px;
+    text-align: left !important;/*一番優先するやつ*/
+    z-index: 1;
+}
+#UIleft{
+    position: fixed;
+    left: 250px;
+    top: 65px;
+    width: 250px;
+    height:600px;
+    border-top: 2px solid blue;
+    border-bottom: 2px solid purple;
+    border-left: 2px solid blue;
+    border-right: 2px solid purple;
+    padding: 10px;
+    z-index: 1;
+}
+#UIright{
+    position: fixed;
+    left: 1155px;
+    top: 65px;
+    width: 250px;
+    height:600px;
+    border-top: 2px solid blue;
+    border-bottom: 2px solid purple;
+    border-left: 2px solid blue;
+    border-right: 2px solid purple;
+    padding: 10px;
+    z-index: 1;
+}
+#UIbottom{
+    position: fixed;
+    left: 300px;
+    right: 300px;
+    top: 515px;
+    width: 600px;
+    height:150px;
+    border-top: 2px solid blue;
+    border-bottom: 2px solid purple;
+    border-left: 2px solid blue;
+    border-right: 2px solid purple;
+    padding: 10px;
+    z-index: 1;
+}
+@media screen and (max-width: 768px) {
+    #UItop, #TextBox, #UIbottom {
+        width: 90%;
+    }
+    #UIleft, #UIright {
+        width: 90%;
+        left: 50%;
+        transform: translateX(-50%);
+    }
+    #Choice1, #Choice2, #Choice3, #Choice4 {
+        width: 60%;
+    }
+}
+
+#Choice1{
+    position: fixed;
+    left: 300px;
+    right: 300px;
+    top: 200px;
+    width: 200px;
+    height:40px;
+    border-top: 2px solid black;
+    border-bottom: 2px solid black;
+    border-left: 2px solid black;
+    border-right: 2px solid black;
+    padding: 10px;
+    z-index: 100;
+}
+
+#Choice2{
+    position: fixed;
+    left: 300px;
+    right: 300px;
+    top: 250px;
+    width: 200px;
+    height:40px;
+    border-top: 2px solid black;
+    border-bottom: 2px solid black;
+    border-left: 2px solid black;
+    border-right: 2px solid black;
+    padding: 10px;
+    z-index: 100;
+}
+#Choice3{
+    position: fixed;
+    left: 300px;
+    right: 300px;
+    top: 300px;
+    width: 200px;
+    height:40px;
+    border-top: 2px solid black;
+    border-bottom: 2px solid black;
+    border-left: 2px solid black;
+    border-right: 2px solid black;
+    padding: 10px;
+    z-index: 100;
+}
+#Choice4{
+    position: fixed;
+    left: 300px;
+    right: 300px;
+    top: 350px;
+    width: 200px;
+    height:40px;
+    border-top: 2px solid black;
+    border-bottom: 2px solid black;
+    border-left: 2px solid black;
+    border-right: 2px solid black;
+    padding: 10px;
+    z-index: 100;
+}
+.Choice:hover, .btn_design:focus, .btn_design:active {
+    -webkit-transform: scale(1.1);
+    transform: scale(1.1);
+    cursor: pointer;
+}
+</style>
 </html>

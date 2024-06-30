@@ -1,100 +1,55 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ja">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Simple Danmaku Game</title>
-<style>
-    body {
-        margin: 0;
-        padding: 0;
-        overflow: hidden;
-    }
-    canvas {
-        display: block;
-    }
-</style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>カスタムオーディオプレーヤー</title>
+    <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-<canvas id="gameCanvas"></canvas>
-<script>
-    const canvas = document.getElementById('gameCanvas');
-    const ctx = canvas.getContext('2d');
-
-    // Set canvas size
-    canvas.width = window.innerWidth;
-    canvas.height = window.innerHeight;
-
-    // Player object
-    const player = {
-        x: canvas.width / 2,
-        y: canvas.height - 50,
-        width: 50,
-        height: 50,
-        color: 'blue'
-    };
-
-    // Bullets array
-    const bullets = [];
-    // Update bullet positions
-    function updateBullets() {
-        bullets.forEach((bullet, index) => {
-            bullet.y += bullet.speed;
-            if (bullet.y - bullet.radius > canvas.height) {
-                bullets.splice(index, 1);
+    <div class="audio-player">
+        <audio id="audio" src="path/to/your/audio/file.mp3"></audio>
+        <div class="controls">
+            <button id="playPauseBtn" class="control-btn play"></button>
+            <button id="muteBtn" class="control-btn unmute"></button>
+            <div class="progress-bar">
+                <div class="progress"></div>
+            </div>
+        </div>
+    </div>
+    <script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const audio = document.getElementById('audio');
+        const playPauseBtn = document.getElementById('playPauseBtn');
+        const muteBtn = document.getElementById('muteBtn');
+        const progressBar = document.querySelector('.progress');
+    
+        playPauseBtn.addEventListener('click', togglePlayPause);
+        muteBtn.addEventListener('click', toggleMute);
+        audio.addEventListener('timeupdate', updateProgressBar);
+    
+        function togglePlayPause() {
+            if (audio.paused) {
+                audio.play();
+                playPauseBtn.classList.remove('play');
+                playPauseBtn.classList.add('pause');
+            } else {
+                audio.pause();
+                playPauseBtn.classList.remove('pause');
+                playPauseBtn.classList.add('play');
             }
-        });
-    }
-
-    // Draw function
-    function draw() {
-        // Clear canvas
-        ctx.clearRect(0, 0, canvas.width, canvas.height);
-
-        // Draw player
-        ctx.fillStyle = player.color;
-        ctx.fillRect(player.x - player.width / 2, player.y - player.height / 2, player.width, player.height);
-
-        // Draw bullets
-        bullets.forEach(bullet => {
-            ctx.beginPath();
-            ctx.fillStyle = bullet.color;
-            ctx.arc(bullet.x, bullet.y, bullet.radius, 0, Math.PI * 2);
-            ctx.fill();
-            ctx.closePath();
-        });
-    }
-
-    // Game loop
-    function gameLoop() {
-        updateBullets();
-        draw();
-        requestAnimationFrame(gameLoop);
-    }
-
-    // Function to create new bullet
-    function createBullet() {
-        bullets.push({
-            x: Math.random() * canvas.width,
-            y: 0,
-            radius: 5,
-            color: 'red',
-            speed: [Math.floor(Math.random() * 2) + 1] * 7
-        });
-    }
-
-    // Create new bullets at regular intervals
-    setInterval(createBullet, 100);
-
-    // Event listener for mouse movement
-    window.addEventListener('mousemove', updatePlayerPosition);
-    function updatePlayerPosition(event) {
-        player.x = event.clientX;
-        player.y = event.clientY;
-    }
-
-    // Start the game loop
-    gameLoop();
-</script>
+        }
+    
+        function toggleMute() {
+            audio.muted = !audio.muted;
+            muteBtn.classList.toggle('mute');
+            muteBtn.classList.toggle('unmute');
+        }
+    
+        function updateProgressBar() {
+            const progress = (audio.currentTime / audio.duration) * 100;
+            progressBar.style.width = `${progress}%`;
+        }
+    });</script>
 </body>
 </html>

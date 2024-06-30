@@ -1050,8 +1050,10 @@ async function skillact() {
         window.setTimeout(enemyorplayer, 1000)
     } else if(playername == 'utusen'){
         if (enemyhealth <= Math.floor(enemymaxhealth * 0.5)){
-            x = 'utuEXvoice' + [Math.floor(Math.random() * 3)+1];
-            document.getElementById('log').textContent = x[Math.floor(Math.random() * x)];
+            x = Math.floor(Math.random() * 3)+1;
+                 if(x ==1){document.getElementById('log').textContent = utuEXvoice1[0];await delay(1000);document.getElementById('log').textContent = utuEXvoice1[1];await delay(1000);document.getElementById('log').textContent = utuEXvoice1[2];await delay(1000);}
+            else if(x ==2){document.getElementById('log').textContent = utuEXvoice2[0];await delay(1000);document.getElementById('log').textContent = utuEXvoice2[1];await delay(1000);document.getElementById('log').textContent = utuEXvoice2[2];await delay(1000);}
+            else if(x ==3){document.getElementById('log').textContent = utuEXvoice3[0];await delay(1000);document.getElementById('log').textContent = utuEXvoice3[1];await delay(1000);document.getElementById('log').textContent = utuEXvoice3[2];await delay(1000);}
             disappear(); zombiefriendbreak();
             document.getElementById('PlayerFriendFront').innerHTML = '<br><br><b><font id="ZombieFriendName" color="#4c6cb3"></font></b>   <u>friended</u>  <br><span id="ZombieFriendHealth">0</span>/<span id="ZombieFriendMaxHealth">0</span>';
             zombiefriendname = enemyname;
@@ -1062,19 +1064,18 @@ async function skillact() {
             enemyhealth = 0;
             tekiou(); zombiefriendtekiou();
             document.getElementById('log').textContent = 'utusenは' + enemyname + 'を仲間にした!';
-            document.getElementById('Skillbutton').innerHTML = '';
-            skillcooldown = 4;
+            document.getElementById('Skillbutton').innerHTML = ''; skillcooldown = 4;
             document.getElementById('EnemyName').textContent = '???';
             window.setTimeout(killedenemy,1000);
             } else {
                 document.getElementById('log').textContent = '仲間になる気がないなら殺します';//適当セリフ　「「「適当セリフ」」」
-                x = enemyhealth; y = enemyhealth;
-                x -= (playerattack * playerpower + (weaponpower * 3));//武器の攻撃力が三倍乗ります　これいいね　倍率高まるやつ
-                x = Math.ceil(x); damage = y - x;
-                if(damage < 0){damage = 0}; if(damage > y){damage = y};
-                enemyhealth -= damage; if (enemyhealth < 0){enemyhealth = 0};
-                document.getElementById('log').textContent = enemyname + 'に' + damage + 'のダメージ!';
-                tekiou();
+                await delay(1000);
+                x = Math.ceil(playerattack * (playerpower * 2) + (weaponpower * 3));//武器の攻撃力が三倍乗ります　これいいね　倍率高まるやつ
+                if(x < 0){x = 0}; if(x > enemyhealth){x = enemyhealth};
+                enemyhealth -= x; tekiou(); if(enemyhealth < 0){enemyhealth = 0};
+                document.getElementById('log').textContent = enemyname + 'に' + x + 'のダメージ!';
+                document.getElementById('Skillbutton').innerHTML = ''; skillcooldown = 2;
+                window.setTimeout(enemyorplayer, 1000)
             }
     }
     }else {document.getElementById('log').textContent = 'skill is not ready...';}
@@ -1362,8 +1363,7 @@ function nextenemy() {
     document.getElementById('EnemyLevel').textContent = enemylevel;
     document.getElementById('EnemyMaxHealth').textContent = enemymaxhealth;
     tekiou();
-    window.setTimeout(playerturn, 750)
-    turncountincrease()
+    window.setTimeout(TurnCountPhase, 1000);
 }   
 function playersutefuri(){
     document.getElementById('log').textContent = 'どの能力を上げますか?';

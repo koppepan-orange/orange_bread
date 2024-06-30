@@ -2,38 +2,116 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>sound play test</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Custom Audio Player</title>
+    <style>body {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+        margin: 0;
+        background-color: #f0f0f0;
+    }
+    #audioPlayer {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        background-color: #fff;
+        padding: 20px;
+        border-radius: 10px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    }
+    .controlBtn {
+        background: none;
+        border: none;
+        cursor: pointer;
+        padding: 0;
+        margin: 0;
+    }
+    .controlBtn img {
+        width: 50px;
+        height: 50px;
+    }
+    #progressContainer {
+        width: 300px;
+        height: 10px;
+        background-color: #ddd;
+        border-radius: 5px;
+        overflow: hidden;
+        position: relative;
+    }
+    #progressBar {
+        height: 100%;
+        background-color: #0095DD;
+        width: 0;
+        transition: width 0.1s;
+    }
+    </style>
 </head>
 <body>
-    <p align="center">
-        <button onclick="soundplay1()">1</button>
-        <button onclick="start()">2</button>
-        <p id="log"></p>
+    <div id="audioPlayer">
+        <button id="prevBtn" class="controlBtn"><img src="button_prev.png" alt="Previous"></button>
+        <button id="playPauseBtn" class="controlBtn"><img id="playPauseImg" src="button_play.png" alt="Play"></button>
+        <button id="nextBtn" class="controlBtn"><img src="button_next.png" alt="Next"></button>
+        <button id="muteBtn" class="controlBtn"><img id="muteImg" src="button_unmute.png" alt="Mute"></button>
+        <div id="progressContainer"><div id="progressBar"></div></div>
+    </div>
+    <audio id="audio" src="music1.mp3"></audio>
     <script>
-        function delay(ms) {
-            return new Promise(resolve => setTimeout(resolve, ms));
-        } // 遅延やってみたかったの
-        const audio = new Audio('voice1.mp3');
-        const audio2 = new Audio('voice3.mp3');
-        const audio3 = new Audio('voice2.mp3');
-        function soundplay1(){
+        const audio = document.getElementById('audio');
+        const playPauseBtn = document.getElementById('playPauseBtn');
+        const muteBtn = document.getElementById('muteBtn');
+        const progressBar = document.getElementById('progressBar');
+        const playPauseImg = document.getElementById('playPauseImg');
+        const muteImg = document.getElementById('muteImg');
+        const prevBtn = document.getElementById('prevBtn');
+        const nextBtn = document.getElementById('nextBtn');
+        const playlist = [
+            'your-audio-file.mp3',
+            'your-second-audio-file.mp3',
+            'your-third-audio-file.mp3'
+        ];
+        let currentTrackIndex = 0;
+        // 再生/一時停止ボタンの操作
+        playPauseBtn.addEventListener('click', () => {
+            if (audio.paused) {
+                audio.play();
+                playPauseImg.src = 'button_play.png'; // 一時停止画像に変更
+                playPauseImg.alt = 'Pause';
+            } else {
+                audio.pause();
+                playPauseImg.src = 'button_stop.png'; // 再生画像に変更
+                playPauseImg.alt = 'Play';
+            }
+        });
+        // ミュート/ミュート解除ボタンの操作
+        muteBtn.addEventListener('click', () => {
+            audio.muted = !audio.muted;
+            if (audio.muted) {
+                muteImg.src = 'button_mute.png'; // ミュート画像に変更
+                muteImg.alt = 'Unmute';
+            } else {
+                muteImg.src = 'button_unmute.png'; // ミュート解除画像に変更
+                muteImg.alt = 'Mute';
+            }
+        });
+        // 次の曲に変更
+        nextBtn.addEventListener('click', () => {
+            if (currentTrackIndex < playlist.length - 1) {
+                currentTrackIndex++;
+            } else {
+                currentTrackIndex = 0; // プレイリストの最初の曲にループ
+            }
+            audio.src = playlist[currentTrackIndex];
             audio.play();
-        }
-        async function start(){
-            document.getElementById("log").textContent = "スタート！";
-            await delay(1000);
-            document.getElementById("log").textContent = "1秒後に音を鳴らします。";
-            await delay(1000);
-            document.getElementById("log").textContent = "声を出すな";
-            audio2.play();
-            await delay(1000);
-            document.getElementById('log').textContent = "サンキュ";
-            audio3.play();
-        }
-        function play(){
-            audio.play();
-        }
-
+            playPauseImg.src = 'button_play'; // 一時停止画像に変更
+            playPauseImg.alt = 'Pause';
+        });
+        // 再生位置バーの更新
+        audio.addEventListener('timeupdate', () => {
+            const progressPercent = (audio.currentTime / audio.duration) * 100;
+            progressBar.style.width = `${progressPercent}%`;
+        });
     </script>
 </body>
 </html>

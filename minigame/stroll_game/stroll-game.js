@@ -15,22 +15,19 @@ let gohomenow = 0;
 let phase = 0;
 const gostraightmove = '<button class="button" id="Select1" onclick="select1()">go straight</button><br><br><button class="button" id="Select2" onclick="select2()">return home</button>';
 const lobyscreen = '<button class="button" onclick="LetsStroll()">Go to stroll</button><br><br><button class="button" onclick-"GoShop()">Shop</button>';
-let vendingnum = []//最大48ターンだゾ！
+let vendingnum = []
 
 function delay(ms){return new Promise(function(resolve){setTimeout(resolve,ms);});}//遅延がやってみたかったのです
 function disappear(){document.getElementById('Select1').textContent = '';document.getElementById('Select2').textContent = '';}
-function start(){
-    playername = document.getElementById('InputPlayername').value
-    if(playername == ''){playername = 'player';reset();}else{reset();}
-}
+//起動時にやっちゃいます！
+playername = 'player'; reset();
 async function reset(){
     x = 0; y = 0; z = 0;
     pt = 0; ptkari = 0;
     have = 0; traveled = 0;
     gohomeroot = 0; gohomenow = 0;
     hour = 14; min = 0; phase = 0;
-    for(i = 1; i < 5; i++){vendingnum.push((Math.floor(Math.random()*6)+1)+(4*i));};
-    document.getElementById('log').textContent = 'start!';
+    vendingnum = [];
     window.setTimeout(BackToLoby,1000)
 }
 async function Timetekiou(){
@@ -141,7 +138,7 @@ async function select1(){
         if(min == 0){x = '00'}else if(min == 5){x = '05'}else{x = min};
         document.getElementById('TimeScore').textContent = '帰宅時間:' + hour + ':' + x;
         document.getElementById('log').textContent = 'これが今回のスコア!';
-        pt = ptkari; ptkari = 0;
+        pt += ptkari; ptkari = 0;
     }
     } else if(phase == 4){
     phase = 0;
