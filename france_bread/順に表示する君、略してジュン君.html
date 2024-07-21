@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <span id="Koumoku"></span>
+    <input type="text" id="InputText"><button onclick="start()" id="startbutton">start</button>
+</body>
+<script>
+    let x
+    let koumoku = [];
+    function delay(ms) {return new Promise(resolve => setTimeout(resolve, ms));} // 遅延
+    async function start(){
+        koumoku = document.getElementById('InputText').value.split(',');
+        document.getElementById('InputText').value = '';
+        document.getElementById('InputText').style.display = 'none';
+        document.getElementById('startbutton').style.display = 'none';
+        document.getElementById('Koumoku').style.display = 'inline';
+        for(x = 0; x < koumoku.length; x++){
+        document.getElementById('Koumoku').textContent = koumoku[x];
+        await delay(60000);
+        }
+        document.getElementById('InputText').style.display = 'inline';
+        document.getElementById('startbutton').style.display = 'inline';
+        document.getElementById('Koumoku').style.display = 'none';
+    }
+</script>
+</html>

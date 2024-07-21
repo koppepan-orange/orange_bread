@@ -1,55 +1,65 @@
 <!DOCTYPE html>
-<html lang="ja">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>カスタムオーディオプレーヤー</title>
-    <link rel="stylesheet" href="styles.css">
+    <title>candystand_test</title>
 </head>
 <body>
-    <div class="audio-player">
-        <audio id="audio" src="path/to/your/audio/file.mp3"></audio>
-        <div class="controls">
-            <button id="playPauseBtn" class="control-btn play"></button>
-            <button id="muteBtn" class="control-btn unmute"></button>
-            <div class="progress-bar">
-                <div class="progress"></div>
-            </div>
-        </div>
-    </div>
+    <button onclick="CandyStand()">Take a Candy</button><br>
     <script>
-    document.addEventListener('DOMContentLoaded', function() {
-        const audio = document.getElementById('audio');
-        const playPauseBtn = document.getElementById('playPauseBtn');
-        const muteBtn = document.getElementById('muteBtn');
-        const progressBar = document.querySelector('.progress');
-    
-        playPauseBtn.addEventListener('click', togglePlayPause);
-        muteBtn.addEventListener('click', toggleMute);
-        audio.addEventListener('timeupdate', updateProgressBar);
-    
-        function togglePlayPause() {
-            if (audio.paused) {
-                audio.play();
-                playPauseBtn.classList.remove('play');
-                playPauseBtn.classList.add('pause');
+        let x, y;
+        let playerattack, playerdefense, playermaxhealth, playerhealth;
+
+
+        let kari = {
+            attack:0,
+            defense:0,
+            health:0
+        }
+
+        y = [1];
+        function CandyStand() {
+            x = Math.floor(Math.random() * 20) + 1;
+            if (!y.includes(x)) {
+                y.push(x);
+                Candycorrect();
             } else {
-                audio.pause();
-                playPauseBtn.classList.remove('pause');
-                playPauseBtn.classList.add('play');
+                y = [1];
+                Candymissed();
             }
         }
-    
-        function toggleMute() {
-            audio.muted = !audio.muted;
-            muteBtn.classList.toggle('mute');
-            muteBtn.classList.toggle('unmute');
+        
+        function Candycorrect(){
+            x = Math.floor(Math.random() * 3)+1;
+            switch(x){
+                case 1:
+                    kari.attack += Math.floor(Math.random() * 8) + 5;if(playerattack < 1){playerattack = 1};
+                    break;
+                case 2:
+                    kari.defense += Math.floor(Math.random() * 4) + 3;if(playerdefense < 0){playerdefense = 0};
+                    break;
+                case 3:
+                    kari.health += Math.floor(Math.random() * 11) + 10;if(playermaxhealth < 1){playermaxhealth = 1};
+                    break;
+            }
         }
-    
-        function updateProgressBar() {
-            const progress = (audio.currentTime / audio.duration) * 100;
-            progressBar.style.width = `${progress}%`;
+        function Candymissed(){
+            x = Math.floor(Math.random() * 3)+1;
+            switch(x){
+                case 1:
+                    playerattack -= Math.floor(Math.random() * 8) + 5;if(playerattack < 1){playerattack = 1};
+                    break;
+                case 2:
+                    playerdefense -= Math.floor(Math.random() * 4) + 3;if(playerdefense < 0){playerdefense = 0};
+                    break;
+                case 3:
+                    playermaxhealth -= Math.floor(Math.random() * 11) + 10;if(playermaxhealth < 1){playermaxhealth = 1};
+                    if(playerhealth > playermaxhealth){playerhealth = playermaxhealth};
+                    break;
+            }
+            kari.attack = 0; kari.defense = 0; kari.health = 0;
         }
-    });</script>
+    </script>
 </body>
 </html>

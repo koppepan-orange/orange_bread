@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Farm Game</title>
+    <style>
+        #UIinfo {
+            border: 2px solid #000;
+            width: 140px;
+            padding: 5px;
+        }
+    </style>
+</head>
+<body>
+    <div id="sidewestrand" style="display: flex;">
+        <div id="UIinfo"></div>
+        <div id="field"></div>
+    </div>
+    <hr noshade="true">
+    <div id="shops">SHOP<br>
+        <button onclick="BuyTool()">Buy<img src="assets/hoe.png" style="width: 15px; height: 15px;"><span id="Toolprice">200€</span></button><br>
+        <button onclick="BuyField()">Buy field(絵なんてないよ☆)<span id="Fieldprice">100€</span></button>
+    </div>
+    <hr noshade="true">
+        <button onclick="SellAll()">Sell all</button>
+    <div id="log"></div>
+    <script>
+        let euro = 100;
+        let wheat = 0;
+        let carrot = 0;
+        let potato = 0;
+        let equip = 1;
+        let had = 0;
+        let toolprice = 200;
+        let fieldprice = 100;
+        let x, y, z;
+        function delay(ms) {
+            return new Promise(resolve => setTimeout(resolve, ms));
+        }
+        function infotekiou() {
+            document.getElementById("UIinfo").innerHTML = "<img src='assets/euro.png' style='width: 15px; height: 15px;'>" + euro + "<br><img src='assets/wheat.png' style='width: 15px; height: 15px;'>" + wheat + "<br><img src='assets/carrot.png' style='width: 15px; height: 15px;'>" + carrot + "<br><img src='assets/potato.png' style='width: 15px; height: 15px;'>" + potato;
+        }
+        function pricetekiou(){
+            document.getElementById("Toolprice").innerHTML = toolprice+"€";
+            document.getElementById("Fieldprice").innerHTML = fieldprice+"€";
+        }
+        async function farming(code) {
+            switch (equip) {
+                case 1:
+                    y = 0;
+                    x = Math.floor(Math.random() * 5); y += x;
+                    wheat += x;
+                    x = Math.floor(Math.random() * 3); y += x;
+                    carrot += x;
+                    infotekiou();
+                    if (y == 0) { document.getElementById("log").textContent = "何も得られなかった.."; }
+                    else { document.getElementById("log").textContent = ""; }
+                    document.getElementById(`farming-${code}`).style.display = 'none';
+                    await delay(2500);
+                    document.getElementById(`farming-${code}`).style.display = 'block';
+                    break;
+                case 2:
+                    y = 0;
+                    x = Math.floor(Math.random() * 10); y += x;
+                    wheat += x;
+                    x = Math.floor(Math.random() * 5); y += x;
+                    carrot += x;
+                    x = Math.floor(Math.random() * 2); y += x;
+                    potato += x;
+                    infotekiou();
+                    if (y == 0) { document.getElementById("log").textContent = "何も得られなかった.."; }
+                    else { document.getElementById("log").textContent = ""; }
+                    document.getElementById(`farming-${code}`).style.display = 'none';
+                    await delay(2500);
+                    document.getElementById(`farming-${code}`).style.display = 'inline'
+                    break;
+            }
+        }
+        function BuyTool() {
+            switch (equip) {
+                case 1:
+                    if (euro >= toolprice) {
+                        euro -= toolprice;
+                        equip = 2;
+                        infotekiou();
+                        toolprice = 500;
+                        pricetekiou();
+                    }
+            }
+        }
+        function BuyField() {
+            if (euro >= fieldprice) {
+                euro -= fieldprice;
+                had += 1;
+                infotekiou();
+                const Zone = document.getElementById('field');
+                const messageElement = document.createElement('button'), br = document.createElement('br');
+                messageElement.textContent = `Farm ${had}`;
+                messageElement.setAttribute('id', `farming-${had}`);
+                messageElement.setAttribute('onclick', `farming('${had}')`);
+                requestAnimationFrame(() => {
+                    Zone.appendChild(messageElement);
+                    if((had % 15) == 0){Zone.appendChild(br);}
+                });
+                fieldprice += 100;
+                pricetekiou();
+            }
+        }
+        function SellAll() {
+            euro += wheat;
+            euro += carrot * 2;
+            euro += potato * 3;
+            wheat = 0;
+            carrot = 0;
+            potato = 0;
+            infotekiou();
+        }
+        infotekiou();
+    </script>
+</body>
+</html>

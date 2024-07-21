@@ -1,61 +1,133 @@
 <!DOCTYPE html>
-<html lang='ja'>
+<html lang="ja">
 <head>
-    <meta charset='UTF-8'>
-    <meta name='viewport' content='width=device-width, initial-scale=1.0'>
-    <title>対話ゲーム</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>モモトーク</title>
     <style>
         body {
-            font-family: Arial, sans-serif;
-            background-color: #f0f0f0;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-            margin: 0;
-        }
-        .dialogue-box {
-            width: 50%; 
-            padding: 20px;
-            background-color: #fff;
-            border: 2px solid #000;
-            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
-        }
+    font-family: Arial, sans-serif;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    background-color: #f0f0f0;
+    margin: 0;
+}
+
+.chat-container {
+    width: 300px;
+    height: 500px;
+    border: 1px solid #ccc;
+    border-radius: 10px;
+    background-color: #fff;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+}
+
+.chat-box {
+    flex: 1;
+    padding: 10px;
+    overflow-y: auto;
+    border-bottom: 1px solid #ccc;
+}
+
+.input-box {
+    display: flex;
+    flex-direction: column;
+    border-top: 1px solid #ccc;
+}
+
+button {
+    margin: 5px;
+    padding: 10px;
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 14px;
+}
+
+button:hover {
+    background-color: #0056b3;
+}
+
+.message {
+    margin: 5px 0;
+    padding: 10px;
+    border-radius: 5px;
+    background-color: #e0e0e0;
+}
+
+.message.bot {
+    align-self: flex-start;
+}
+
+.message.user {
+    background-color: #007bff;
+    color: #fff;
+    align-self: flex-end;
+}
+
     </style>
 </head>
 <body>
-    <div class='dialogue-box' id='dialogueBox'>
-        <span id='message1'>ここにメッセージが表示されます。</span><br>
-        <span id='message2'>ここにメッセージが表示されます。</span>
+    <div class="chat-container">
+        <div class="chat-box" id="chat-box">
+            <!-- 初期メッセージ -->
+            <div class="message bot">よお、先生。</div>
+        </div>
+        <div class="input-box" id="input-box">
+            <!-- 選択肢ボタンはJavaScriptで追加 -->
+        </div>
     </div>
-
     <script>
-    document.addEventListener('DOMContentLoaded', () => {
-      
-    let firstmessages1 = ['お、よく来たね！','ここでは.....','うーん..','楽しみたかったら楽しんでね〜！'];
-    let firstmessages2 = ['(zキーで進みます)','','やっぱめんどいから説明は無しで！','あ、ゆっくりしていってね！'];
-
-    let readmessage = 0;
-
-    const dialogueBox = document.getElementById('dialogueBox');
-    const msgdesu1 = document.getElementById('message1');
-    const msgdesu2 = document.getElementById('message2');
-
-    function NextMessage(){msgdesu1.textContent = firstmessages1[readmessage]; msgdesu2.textContent = firstmessages2[readmessage];}
-    document.addEventListener('keydown', (event) => {
-        if (event.key === 'z') {
-            readmessage++;
-            if (readmessage < firstmessages1.length) {
-                NextMessage();
-            } else {
-                msgdesu1.textContent = 'これが最後のメッセージです。'; // 全てのメッセージを表示し終えた場合の処理
-                msgdesu2.textContent = 'ctrl+rを押したらいいんじゃないかな!';
-            }
-        }
-    });
-    NextMessage(); // 初期メッセージを表示
-
+        document.addEventListener('DOMContentLoaded', (event) => {
+    // 初期選択肢を追加
+    addChoices([
+        { text: 'あ？なんだとこら', next: 'choice1' },
+        { text: 'は、はい..なんでしょうか.....?', next: 'choice2' }
+    ]);
 });
+
+function addMessage(sender, text) {
+    const chatBox = document.getElementById('chat-box');
+    const messageElement = document.createElement('div');
+    messageElement.classList.add('message', sender);
+    messageElement.textContent = text;
+    chatBox.appendChild(messageElement);
+    chatBox.scrollTop = chatBox.scrollHeight;
+}
+
+function addChoices(choices) {
+    const inputBox = document.getElementById('input-box');
+    inputBox.innerHTML = ''; // 既存の選択肢をクリア
+
+    choices.forEach(choice => {
+        const button = document.createElement('button');
+        button.textContent = choice.text;
+        button.addEventListener('click', () => handleChoice(choice.next));
+        inputBox.appendChild(button);
+    });
+}
+
+function handleChoice(next) {
+    if (next === 'choice1') {
+        addMessage('user', 'あ？なんだとこら');
+        setTimeout(() => addMessage('bot', 'お？喧嘩か？'), 500);
+        setTimeout(() => endConversation(), 1000);
+    } else if (next === 'choice2') {
+        addMessage('user', 'は、はい..なんでしょうか.....?');
+        setTimeout(() => addMessage('bot', 'おうおうびびってんじゃねぇぞごら'), 500);
+        setTimeout(() => endConversation(), 1000);
+    }
+}
+
+function endConversation() {
+    setTimeout(() => addMessage('bot', 'じゃあな'), 500);
+}
 
     </script>
 </body>

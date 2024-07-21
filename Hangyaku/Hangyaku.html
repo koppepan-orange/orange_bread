@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+<head>
+</head>
+<body>
+    <style>
+        @font-face{
+        font-family:Hangyaku;
+        src:url('Hangyaku-xRRwq.ttf');
+        }
+        pre{
+        font-family:Hangyaku;
+        white-space:pre-wrap;
+        }
+        *{margin:0 auto; text-align: center;} 
+        #kokodayo{
+            max-width: 90em;/* 最大文字数で、これを超えたら勝手に改行してくれます。emは、全角〜文字の単位。 */
+            word-wrap: break-word;/* 改行を勝手にしてくれるやつ */
+            white-space: normal;
+        }
+    </style>
+    <input type="text" id="koredayo" style="width:1%">
+    <br>
+    <pre id="kokodayo" style="width:90%"></pre>
+    <script>
+        setInterval(function(){document.querySelector('#kokodayo').textContent = document.querySelector('#koredayo').value},1)
+    </script>
+</body>
+</html>
