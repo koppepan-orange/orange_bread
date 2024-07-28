@@ -3,63 +3,532 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>candystand_test</title>
+    <title>休憩所</title>
 </head>
 <body>
-    <button onclick="CandyStand()">Take a Candy</button><br>
+    <div id="CampArea">
+    <button id="CampRest" onclick="Camprest()"></button><br>
+    <button id="CampTrade" onclick="Camptrade()"></button>
+    </div>
+    <span id="log"></span>
     <script>
-        let x, y;
-        let playerattack, playerdefense, playermaxhealth, playerhealth;
-
-
-        let kari = {
-            attack:0,
-            defense:0,
-            health:0
-        }
-
-        y = [1];
-        function CandyStand() {
-            x = Math.floor(Math.random() * 20) + 1;
-            if (!y.includes(x)) {
-                y.push(x);
-                Candycorrect();
-            } else {
-                y = [1];
-                Candymissed();
-            }
-        }
-        
-        function Candycorrect(){
-            x = Math.floor(Math.random() * 3)+1;
-            switch(x){
+        let money = 1000;
+        let potion = 3,bomb = 3,skipcard = 3;
+        function delay(ms) {return new Promise(resolve => setTimeout(resolve, ms));} // 遅延やってみたかったの
+        Camprestper = 0.3
+        function Camparea(){
+            document.getElementById('log').textContent = '休憩できそうな場所を見つけた！';
+            Camprestper = (Math.floor(Math.random() * 4)+3)/10;
+            document.getElementById('CampRest').textContent = '朝まで休む(' + Camprestper*100 + '%回復)';//30のときはスキルカード強化みたいなやつあってもいいかも
+            switch(Math.floor(Math.random() * 3)+1){
                 case 1:
-                    kari.attack += Math.floor(Math.random() * 8) + 5;if(playerattack < 1){playerattack = 1};
-                    break;
-                case 2:
-                    kari.defense += Math.floor(Math.random() * 4) + 3;if(playerdefense < 0){playerdefense = 0};
-                    break;
-                case 3:
-                    kari.health += Math.floor(Math.random() * 11) + 10;if(playermaxhealth < 1){playermaxhealth = 1};
-                    break;
+                if(Math.floor(Math.random() * 3)+1){
+                x = '放浪武器商人がいた！'; y = 10; document.getElementById('CampTrade').textContent = '武器屋に話しかける';
+                }else{x = '武器商人がいた！'; y = 1; document.getElementById('CampTrade').textContent = '武器屋に話しかける';}
+                break;
+                case 2: x = '防具取扱専門家がいた！'; y = 2; document.getElementById('CampTrade').textContent = '防具屋に話しかける'; break;
+                case 3: x = '道具屋がいた！'; y = 3; document.getElementById('CampTrade').textContent = '道具屋に話しかける'; break;
             }
         }
-        function Candymissed(){
-            x = Math.floor(Math.random() * 3)+1;
-            switch(x){
-                case 1:
-                    playerattack -= Math.floor(Math.random() * 8) + 5;if(playerattack < 1){playerattack = 1};
-                    break;
-                case 2:
-                    playerdefense -= Math.floor(Math.random() * 4) + 3;if(playerdefense < 0){playerdefense = 0};
-                    break;
-                case 3:
-                    playermaxhealth -= Math.floor(Math.random() * 11) + 10;if(playermaxhealth < 1){playermaxhealth = 1};
-                    if(playerhealth > playermaxhealth){playerhealth = playermaxhealth};
-                    break;
-            }
-            kari.attack = 0; kari.defense = 0; kari.health = 0;
+        function Camprest(){
+            playerhealth += playermaxhealth * Camprestper;
+            if(playerhealth > playermaxhealth){playerhealth = playermaxhealth;};
+            document.getElementById('log').textContent = '寝ることにした....';//睡眠阻害イベント...はさすがにやめようか..wちょっと隠しイベント多すぎる
         }
+        async function Camptrade(){
+            if(y == 1){
+                document.getElementById('log').textContent = '武器屋に話しかけた！';
+                await delay(1000);
+                nowshop = 1;
+                document.getElementById('log').textContent = 'ここにはこんなものがあるけど、どうする？';
+                document.getElementById('CampArea').innerHTML = '<span id="CampMoney"></span><br><br><iframe height="230" width="200" src="assets/shops/weapons.txt"></iframe><br><input type="text" id="ShopInputText" minlength="2" maxlength="2" size="16" placeholder="write number here"><button class="button" onclick="ShopBuyButton()">Buy</button><br><br><button class="button" onclick="CampBye">Bye</button>';
+            }else if(y == 2){
+                document.getElementById('log').textContent = '防具屋に話しかけた！';
+                await delay(1000);
+                nowshop = 2;
+                document.getElementById('log').textContent = 'うちの店ではこんなものが売ってるよ';
+                document.getElementById('CampArea').innerHTML = '<span id="CampMoney"></span><br><br><iframe height="230" width="200" src="assets/shops/armors.txt"></iframe><br><input type="text" id="ShopInputText" minlength="2" maxlength="2" size="16" placeholder="write number here"><button class="button" onclick="ShopBuyButton()">Buy</button><br><br><button class="button" onclick="CampBye">Bye</button>';
+            }else if(y == 3){
+                document.getElementById('log').textContent = '道具屋に話しかけた！';
+                await delay(1000);
+                nowshop = 3;
+                document.getElementById('log').textContent = 'いらっしゃいませぇぇぇぇぇ？？ご注文をどうぞ！！！！';
+                document.getElementById('CampArea').innerHTML = '<span id="CampMoney"></span><br><br><iframe height="230" width="200" src="assets/shops/tools.txt"></iframe><br><input type="text" id="ShopInputText" minlength="2" maxlength="2" size="16" placeholder="write number here"><button class="button" onclick="ShopBuyButton()">Buy</button><br><br><button class="button" onclick="CampBye">Bye</button>';
+            }else if(y == 10){
+                document.getElementById('log').textContent = '武器屋に話しかけた！';
+                await delay(1000);
+                nowshop = 10;
+                document.getElementById('log').textContent = 'ほう..よく来たな。好きに見ていってくれ';
+                document.getElementById('CampArea').innerHTML = '<span id="CampMoney"></span><br><br><iframe height="230" width="200" src="assets/shops/rareweapons.txt"></iframe><br><input type="text" id="ShopInputText" minlength="2" maxlength="2" size="16" placeholder="write number here"><button class="button" onclick="ShopBuyButton()">Buy</button><br><br><button class="button" onclick="CampBye">Bye</button>';
+            }
+        }
+
+
+        //shop
+// #region My Custom Region
+let nowshop = 0;
+let haveweapons = [];
+let havearmors = [];
+let havetools = [];
+let equipweapon = 0;
+let equiparmor = 0;
+let equiptool1 = potion;
+let equiptool2 = bomb;
+let equiptool3 = skipcard;
+let weaponpower = 0;
+let armorshell = 0;
+function ShopBuyButton(){
+    shopinputtext = document.getElementById('ShopInputText').value;
+    switch(shopinputtext){
+      case '01':
+        if(nowshop == 1){
+        if(haveweapons.includes("木の棒")){document.getElementById('log').textContent = 'you already have a it!';}
+        else{
+        if(money >= 20){money -= 20; haveweapons.push('木の棒');document.getElementById('log').textContent = '木の棒を購入しました!';}
+        else{document.getElementById('log').textContent = 'not enough money..';};
+        }
+        break;
+        } else if(nowshop == 2){
+        if(havearmors.includes("マスク")){document.getElementById('log').textContent = 'you already have a it!';}
+        else{
+        if(money >= 10){money -= 10; havearmors.push('マスク');document.getElementById('log').textContent = 'マスクを購入しました!';}
+        else{document.getElementById('log').textContent = 'not enough money..';};
+        }
+        break;
+        } else if(nowshop == 3){
+        if(money >= 30){money -= 30; havetools.push('アスピリン');document.getElementById('log').textContent = 'アスピリンを購入しました!';}
+        else{document.getElementById('log').textContent = 'not enough money..';};
+        break;
+        } else if(nowshop == 10){
+        if(haveweapons.includes("タナトスナイフ")){document.getElementById('log').textContent = 'you already have a it!';}
+        else{
+        if(money >= 300){money -= 300; haveweapons.push('タナトスナイフ');document.getElementById('log').textContent = 'タナトスナイフを購入しました!';}
+        else{document.getElementById('log').textContent = 'not enough money..';};
+        }
+        break;
+        }
+      case '02':
+        if(nowshop == 1){
+        if(haveweapons.includes("木刀")){document.getElementById('log').textContent = 'you already have a it!';}
+        else{
+        if(money >= 50){money -= 50; haveweapons.push('木刀');document.getElementById('log').textContent = '木刀を購入しました!';}
+        else{document.getElementById('log').textContent = 'not enough money..';};
+        }
+        break;
+        } else if(nowshop == 2){
+        if(havearmors.includes("薄めの本")){document.getElementById('log').textContent = 'you already have a it!';}
+        else{
+        if(money >= 20){money -= 20; havearmors.push('薄めの本');document.getElementById('log').textContent = '薄い本を購入しました!ダメ!死刑!!';}
+        else{document.getElementById('log').textContent = 'not enough money..';};
+        }
+        break;
+        } else if(nowshop == 3){
+        if(money >= 50){money -= 50; havetools.push('パブロン');document.getElementById('log').textContent = 'パブロンを購入しました!';}
+        else{document.getElementById('log').textContent = 'not enough money..';};
+        break;
+        } else if(nowshop == 10){
+        if(haveweapons.includes("timeontarget")){document.getElementById('log').textContent = 'you already have a it!';}
+        else{
+        if(money >= 300){money -= 300; haveweapons.push('timeontarget');document.getElementById('log').textContent = 'You bought the Time on Target.';}
+        else{document.getElementById('log').textContent = 'not enough money..';};
+        }
+        break;
+        }
+      case '03':
+        if(nowshop == 1){
+        if(haveweapons.includes("竹刀")){document.getElementById('log').textContent = 'you already have a it!';}
+        else{
+        if(money >= 100){money -= 100; haveweapons.push('竹刀');document.getElementById('log').textContent = '竹刀を購入しました!';}
+        else{document.getElementById('log').textContent = 'not enough money..';};
+        }
+        break;
+        } else if(nowshop == 2){
+        if(havearmors.includes("木の板")){document.getElementById('log').textContent = 'you already have a it!';}
+        else{
+        if(money >= 50){money -= 50; havearmors.push('木の板');document.getElementById('log').textContent = '木の板を購入しました!';}
+        else{document.getElementById('log').textContent = 'not enough money..';};
+        }
+        break;
+        } else if(nowshop == 3){
+        if(money >= 100){money -= 100; havetools.push('トリプシン');document.getElementById('log').textContent = 'トリプシンを購入しました!';}
+        else{document.getElementById('log').textContent = 'not enough money..';};
+        break;
+        } else if(nowshop == 10){
+        if(haveweapons.includes("大博打")){document.getElementById('log').textContent = 'you already have a it!';}
+        else{
+        if(money >= 300){money -= 300; haveweapons.push('大博打');document.getElementById('log').textContent = '大博打を購入しました!';}
+        else{document.getElementById('log').textContent = 'not enough money..';};
+        }
+        break;
+        }
+      case '04':
+        if(nowshop == 1){
+        if(haveweapons.includes("石ころ")){document.getElementById('log').textContent = 'you already have a it!';}
+        else{
+        if(money >= 200){money -= 200; haveweapons.push('石ころ');document.getElementById('log').textContent = '石ころを購入しました!';}
+        else{document.getElementById('log').textContent = 'not enough money..';};
+        }
+        break;
+        } else if(nowshop == 2){
+        if(havearmors.includes("テッパン")){document.getElementById('log').textContent = 'you already have a it!';}
+        else{
+        if(money >= 100){money -= 100; havearmors.push('テッパン');document.getElementById('log').textContent = 'テッパンを購入しました!';}
+        else{document.getElementById('log').textContent = 'not enough money..';};
+        }
+        break;
+        } else if(nowshop == 3){
+        if(money >= 500){money -= 500; havetools.push('ルル');document.getElementById('log').textContent = 'ルルを購入しました!';}
+        else{document.getElementById('log').textContent = 'not enough money..';};
+        break;
+        } else if(nowshop == 10){
+        if(haveweapons.includes("天邪鬼")){document.getElementById('log').textContent = 'you already have a it!';}
+        else{
+        if(money >= 300){money -= 300; haveweapons.push('天邪鬼');document.getElementById('log').textContent = '天邪鬼を購入しました!こーのーりょーうてーかーらーー！！';}
+        else{document.getElementById('log').textContent = 'not enough money..';};
+        }
+        break;
+        }
+      case '05':
+        if(nowshop == 1){
+        if(haveweapons.includes("大きな石")){document.getElementById('log').textContent = 'you already have a it!';}
+        else{
+        if(money >= 300){money -= 300; haveweapons.push('大きな石');document.getElementById('log').textContent = '大きな石を購入しました!';}
+        else{document.getElementById('log').textContent = 'not enough money..';};
+        }
+        break;
+        } else if(nowshop == 2){
+        if(havearmors.includes("鍋の蓋")){document.getElementById('log').textContent = 'you already have a it!';}
+        else{
+        if(money >= 300){money -= 300; havearmors.push('鍋の蓋');document.getElementById('log').textContent = '鍋の蓋を購入しました!';}
+        else{document.getElementById('log').textContent = 'not enough money..';};
+        }
+        break;
+        }
+      case '06':
+        if(nowshop == 1){
+        if(haveweapons.includes("レンガ")){document.getElementById('log').textContent = 'you already have a it!';}
+        else{
+        if(money >= 500){money -= 500; haveweapons.push('レンガ');document.getElementById('log').textContent = 'レンガを購入しました!';}
+        else{document.getElementById('log').textContent = 'not enough money..';};
+        }
+        break;
+        } else if(nowshop == 2){
+        if(havearmors.includes("厚めの本")){document.getElementById('log').textContent = 'you already have a it!';}
+        else{
+        if(money >= 500){money -= 500; havearmors.push('厚めの本');document.getElementById('log').textContent = '厚めの本を購入しました!';}
+        else{document.getElementById('log').textContent = 'not enough money..';};
+        }
+        break;
+        }
+      case '07':
+        if(nowshop == 1){
+        if(haveweapons.includes("薄めの紙")){document.getElementById('log').textContent = 'you already have a it!';}
+        else{
+        if(money >= 20){money -= 20; haveweapons.push('薄めの紙');document.getElementById('log').textContent = '薄めの紙を購入しました!';}
+        else{document.getElementById('log').textContent = 'not enough money..';};
+        }
+        break;
+        } else if(nowshop == 2){
+        if(havearmors.includes("ドア")){document.getElementById('log').textContent = 'you already have a it!';}
+        else{
+        if(money >= 1000){money -= 1000; havearmors.push('ドア');document.getElementById('log').textContent = 'ドアを購入しました!';}
+        else{document.getElementById('log').textContent = 'not enough money..';};
+        }
+        break;
+        }
+      case '08':
+        if(nowshop == 1){
+        if(haveweapons.includes("カード")){document.getElementById('log').textContent = 'you already have a it!';}
+        else{
+        if(money >= 77){money -= 77; haveweapons.push('カード');document.getElementById('log').textContent = 'カードを購入しました!';}
+        else{document.getElementById('log').textContent = 'not enough money..';};
+        }
+        break;
+      }
+      case '09':
+        if(nowshop == 1){
+        if(haveweapons.includes("ハサミ")){document.getElementById('log').textContent = 'you already have a it!';}
+        else{
+        if(money >= 600){money -= 600; haveweapons.push('はさみ');document.getElementById('log').textContent = 'はさみを購入しました!';}
+        else{document.getElementById('log').textContent = 'not enough money..';};
+        }
+        break;
+        }
+      case '10':
+        if(nowshop == 1){
+        if(haveweapons.includes("ナイフ")){document.getElementById('log').textContent = 'you already have a it!';}
+        else{
+        if(money >= 1000){money -= 1000; haveweapons.push('ナイフ');document.getElementById('log').textContent = 'ナイフを購入しました!';}
+        else{document.getElementById('log').textContent = 'not enough money..';};
+        }
+        break;
+        }
+      case '11':
+        if(nowshop == 3){
+        if(money >= 40){money -= 40; havetools.push('投げナイフ');document.getElementById('log').textContent = '投げナイフを購入しました!';}
+        else{document.getElementById('log').textContent = 'not enough money..';};
+        break;
+        } // 4 8 12 30
+      case '12':
+        if(nowshop == 3){
+        if(money >= 80){money -= 80; havetools.push('トリッキーな変数');document.getElementById('log').textContent = 'トリッキーな変数を購入しました!にはははは〜!!';}
+        else{document.getElementById('log').textContent = 'not enough money..';};
+        break;
+        }
+      case '13':
+        if(nowshop == 3){
+        if(money >= 120){money -= 120; havetools.push('援護射撃');document.getElementById('log').textContent = '援護射撃ライセンスを購入しました!';}
+        else{document.getElementById('log').textContent = 'not enough money..';};//え、援護します…(ミユ)
+        break;
+        }
+      case '14':
+        if(nowshop == 3){
+        if(money >= 300){money -= 300; havetools.push('ガラスの破片');document.getElementById('log').textContent = 'ガラスの破片を購入しました!';}
+        else{document.getElementById('log').textContent = 'not enough money..';};
+        break;
+        }
+      default:
+        document.getElementById('log').textContent = 'id doesnt exist...';
+        break;
+    }
+    document.getElementById('CampMoney').textContent = money + '€';
+    document.getElementById('ShopInputText').value = '';
+  }
+function CampBye(){
+  document.getElementById('log').textContent = 'ついでに装備を変えていこうかな？';
+  document.getElementById('CampArea').innerHTML = '<button class="button"onclick="GoToEquip()">そうしよう！</button><br><button class="button"onclick="Campback()">いや、やめとこう</button>';
+}
+function Campback(){
+    document.getElementById('CampRest').textContent = '朝まで休む(' + Camprestper*100 + '%回復)';//30のときはスキルカード強化みたいなやつあってもいいかも
+    switch(y){
+        case 1: document.getElementById('CampTrade').textContent = '武器商人に話しかける';      break;
+        case 2: document.getElementById('CampTrade').textContent = '防具取扱専門家に話しかける'; break;
+        case 3: document.getElementById('CampTrade').textContent = '道具屋24に話しかける';      break;
+        case 10:document.getElementById('CampTrade').textContent = '放浪武器商人に話しかける';   break;
+    }
+}
+let appearweapons = '';
+let appeararmors = '';
+let appeartools = '';
+function GoToEquip(){
+    document.getElementById('CampArea').innerHTML = '<button class="button"onclick="GoToEquipWeapon()">Equip Weapon</button><br><br><button class="button"onclick="GoToEquipArmor()">Equip Armor</button><br><br><button class="button"onclick="GoToEquipTool()">Equip Tool</button><br><button class="button"onclick="Campback()">Leave</button>'
+}
+function GoToEquipWeapon(){
+    nowshop = 4;
+    document.getElementById('CampArea').innerHTML = '<span id="AppearShops"></span><br><br><input type="text" id="ShopInputText" minlength="2" maxlength="2" size="16" placeholder="write number here"><button class="button" onclick="ShopEquipButton()">Equip</button><br><br><button class="button" onclick="GoToEquip()">Back</button>';
+    appearweapons = '';
+    x = 0;
+    if(haveweapons.includes("木の棒")){x += 1;}
+    if(haveweapons.includes("木刀")){x += 10;}
+    if(haveweapons.includes("竹刀")){x += 100;}
+    if(haveweapons.includes("石ころ")){x += 1000;}
+    if(haveweapons.includes("大きな石")){x += 10000;}
+    if(haveweapons.includes("レンガ")){x += 100000;}
+    if(haveweapons.includes("薄めの紙")){x += 1000000;}
+    if(haveweapons.includes("カード")){x += 10000000;}
+    if(haveweapons.includes("はさみ")){x += 100000000;}
+    if(haveweapons.includes("ナイフ")){x += 1000000000;}
+    if(haveweapons.includes("タナトスナイフ")){x += 10000000000;}
+    if(haveweapons.includes("timeontarget")){x += 100000000000;}
+    if(haveweapons.includes("大博打")){x += 1000000000000;}
+    if(haveweapons.includes("天邪鬼")){x += 10000000000000;}
+    if(x >= 10000000000000){x -= 10000000000000; appearweapons = '14 天邪鬼'}
+    if(x >= 1000000000000){x -= 1000000000000; appearweapons = '13 大博打'+ '<br>' + appearweapons;}
+    if(x >= 100000000000){x -= 100000000000; appearweapons = '12 time on target'+ '<br>' + appearweapons;}
+    if(x >= 10000000000){x -= 10000000000; appearweapons = '11 タナトスナイフ'+ '<br>' + appearweapons;}
+    if(x >= 1000000000){x -= 1000000000; appearweapons = '10 ナイフ'+ '<br>' + appearweapons;}
+    if(x >= 100000000){x -= 100000000; appearweapons = '09 はさみ'+ '<br>' + appearweapons;}
+    if(x >= 10000000){x -= 10000000; appearweapons = '08 カード'+ '<br>' + appearweapons;}
+    if(x >= 1000000){x -= 1000000; appearweapons = '07 薄めの紙'+ '<br>' + appearweapons;}
+    if(x >= 100000){x -= 100000; appearweapons = '06 レンガ' + '<br>' + appearweapons;}
+    if(x >= 10000){x -= 10000; appearweapons = '05 大きな石' + '<br>' + appearweapons;}
+    if(x >= 1000){x -= 1000; appearweapons = '04 石ころ' + '<br>' + appearweapons;}
+    if(x >= 100){x -= 100; appearweapons = '03 竹刀' + '<br>' + appearweapons;}
+    if(x >= 10){x -= 10; appearweapons = '02 木刀' + '<br>' + appearweapons;}
+    if(x >= 1){x -= 1; appearweapons = '01 木の棒' + '<br>' + appearweapons;}
+    document.getElementById('AppearShops').innerHTML = appearweapons;
+  }
+  function GoToEquipArmor(){
+    nowshop = 5;
+    document.getElementById('CampArea').innerHTML = '<span id="AppearShops"></span><br><br><input type="text" id="ShopInputText" minlength="2" maxlength="2" size="16" placeholder="write number here"><button class="button" onclick="ShopEquipButton()">Equip</button><br><br><button class="button" onclick="GoToEquip()">Back</button>';
+    appeararmors = '';
+    x = 0;
+    if(havearmors.includes("マスク")){x += 1;}
+    if(havearmors.includes("薄めの本")){x += 10;}
+    if(havearmors.includes("木の板")){x += 100;}
+    if(havearmors.includes("テッパン")){x += 1000;}
+    if(havearmors.includes("鍋の蓋")){x += 10000;}
+    if(havearmors.includes("厚めの本")){x += 100000;}
+    if(havearmors.includes("ドア")){x += 1000000;}
+    if(x >= 1000000){x -= 1000000; appeararmors = '07 ドア'+ '<br>' + appeararmors;}
+    if(x >= 100000){x -= 100000; appeararmors = '06 厚めの本'+ '<br>' + appeararmors;}
+    if(x >= 10000){x -= 10000; appeararmors = '05 鍋の蓋'+ '<br>' + appeararmors;}
+    if(x >= 1000){x -= 1000; appeararmors = '04 テッパン'+ '<br>' + appeararmors;}
+    if(x >= 100){x -= 100; appeararmors = '03 木の板'+ '<br>' + appeararmors;}
+    if(x >= 10){x -= 10; appeararmors = '02 薄めの本'+ '<br>' + appeararmors;}
+    if(x >= 1){x -= 1; appeararmors = '01 マスク'+ '<br>' + appeararmors;}
+    document.getElementById('AppearShops').innerHTML = appeararmors;
+  }
+  function GoToEquipTool(){
+    nowshop = 6;
+    document.getElementById('CampArea').innerHTML = '';//ここどうにかして(最重要)(equiptool1~3をつくってbombとかもそれに含めて、持ってないやつも登録できるようにしたら処理楽かな？)
+  }
+function ShopEquipButton(){
+  shopinputtext = document.getElementById('ShopInputText').value;
+  switch(shopinputtext){
+    case '01':
+      if(nowshop == 4){
+      if(haveweapons.includes("木の棒")){
+        document.getElementById('log').textContent = 'あなたは木の棒を装備しました！';
+        equipweapon = 1;
+        weaponpower = 1;
+      }
+      else{document.getElementById('log').textContent = 'you dont have it!';}
+      break;
+      } else if(nowshop == 5){
+      if(havearmors.includes("マスク")){
+        document.getElementById('log').textContent = 'あなたはマスクを装備しました！';
+        equiparmor = 1;
+        armorshell = 0;
+      }
+      else{document.getElementById('log').textContent = 'you dont have it!';}
+      break;
+      };
+    case '02':
+      if(nowshop == 4){
+      if(haveweapons.includes("木刀")){
+        document.getElementById('log').textContent = 'あなたは木刀を装備しました！';
+        equipweapon = 2;
+        weaponpower = 2;
+      }
+      else{document.getElementById('log').textContent = 'you dont have it!';}
+      break;
+      } else if(nowshop == 5){
+      if(havearmors.includes("薄めの本")){
+        document.getElementById('log').textContent = 'あなたは薄い本を装備しました！';
+        equiparmor = 2;
+        armorshell = 0;
+      }
+      else{document.getElementById('log').textContent = 'you dont have it!';}
+      break;
+      };
+    case '03':
+      if(nowshop == 4){
+        if(haveweapons.includes("竹刀")){
+          document.getElementById('log').textContent = 'あなたは竹刀を装備しました！';
+          equipweapon = 3;
+        weaponpower = 3;
+        }
+        }
+      else if(nowshop == 5){
+      if(havearmors.includes("木の板")){
+        document.getElementById('log').textContent = 'あなたは木の板を装備しました！';
+        equiparmor = 3;
+        armorshell = 1;
+      }
+      else{document.getElementById('log').textContent = 'you dont have it!';}
+      break;
+      };
+    case '04':
+      if(nowshop == 4){
+        if(haveweapons.includes("石ころ")){
+          document.getElementById('log').textContent = 'あなたは石ころを装備しました！';
+          equipweapon = 4;
+          weaponpower = 4;
+        } 
+        } 
+      else if(nowshop == 5){
+      if(havearmors.includes("テッパン")){
+        document.getElementById('log').textContent = 'あなたはテッパンを装備しました！';
+        equiparmor = 4;
+        armorshell = 2;
+      }
+      else{document.getElementById('log').textContent = 'you dont have it!';}
+      break;
+      };
+    case '05':
+      if(nowshop == 4){
+        if(haveweapons.includes("大きな石")){
+          document.getElementById('log').textContent = 'あなたは大きな石を装備しました！';
+          equipweapon = 5;
+          weaponpower = 5;
+        }
+        }
+      else if(nowshop == 5){
+      if(havearmors.includes("鍋の蓋")){
+        document.getElementById('log').textContent = 'あなたは鍋の蓋を装備しました！';
+        equiparmor = 5;
+        armorshell = 3;
+      }
+      else{document.getElementById('log').textContent = 'you dont have it!';}
+      break;
+      };
+    case '06':
+      if(nowshop == 4){
+        if(haveweapons.includes("レンガ")){
+          document.getElementById('log').textContent = 'あなたはレンガを装備しました！';
+          equipweapon = 6;
+          weaponpower = 6;
+        }
+        }
+    else if(nowshop == 5){
+      if(haveweapons.includes("厚めの本")){
+        document.getElementById('log').textContent = 'あなたは厚めの本を装備しました！';
+        equiparmor = 6;
+        armorshell = 4;
+      }
+      else{document.getElementById('log').textContent = 'you dont have it!';}
+      break;
+      };
+    case '07':
+      if(nowshop == 4){
+        if(haveweapons.includes("薄めの紙")){
+          document.getElementById('log').textContent = 'あなたは薄めの紙を装備しました！';
+          equipweapon = 7;
+          weaponpower = 1;
+        }
+        }
+      else if(nowshop == 5){
+        if(haveweapons.includes("ドア")){
+          document.getElementById('log').textContent = 'あなたはドアを装備しました！';
+          equiparmor = 7;
+          armorshell = 5;
+        }
+        else{document.getElementById('log').textContent = 'you dont have it!';}
+        break;
+        };
+    case '08':
+      if(nowshop == 4){
+        if(haveweapons.includes("カード")){
+          document.getElementById('log').textContent = 'あなたはカードを装備しました！';
+          equipweapon = 8;
+          weaponpower = 1;
+        }
+          break;
+        };
+    case '09':
+      if(nowshop == 4){
+        if(haveweapons.includes("はさみ")){
+          document.getElementById('log').textContent = 'あなたははさみを装備しました！';
+          equipweapon = 9;
+          weaponpower = 7;
+        }
+          break;
+        };
+    case '10':
+      if(nowshop == 4){
+        if(haveweapons.includes("ナイフ")){
+          document.getElementById('log').textContent = 'あなたはナイフを装備しました！';
+          equipweapon = 10;
+          weaponpower = 8;
+        }
+          break;
+        };
+    }
+    document.getElementById('ShopInputText').value = '';
+}
+// #endregion
+
     </script>
 </body>
 </html>

@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>休憩所</title>
+</head>
+<body>
+    <div id="CampArea">
+    <button id="CampRest" onclick="Camprest()"></button><br>
+    <button id="CampTrade" onclick="Camptrade()"></button>
+    </div>
+    <span id="log"></span>
+    <script>
+        function delay(ms) {return new Promise(resolve => setTimeout(resolve, ms));} // 遅延やってみたかったの
+        Camprestper = 0.3
+        function Camparea(){
+            document.getElementById('log').textContent = '休憩できそうな場所を見つけた！';
+            Camprestper = (Math.floor(Math.random() * 4)+3) / 10
+            document.getElementById('CampRest').textContent = '朝まで休む(' + Camprestper*100 + '%回復)';//30のときはスキルカード強化みたいなやつあってもいいかも
+            switch(Math.floor(Math.random() * 3)+1){
+                case 1:
+                if(Math.floor(Math.random() * 3)+1){
+                x = '放浪武器商人がいた！'; y = 10; document.getElementById('CampTrade').textContent = '武器屋に話しかける';
+                }else{x = '武器商人がいた！'; y = 1; document.getElementById('CampTrade').textContent = '武器屋に話しかける';}
+                break;
+                case 2: x = '防具取扱専門家がいた！'; y = 2; document.getElementById('CampTrade').textContent = '防具屋に話しかける'; break;
+                case 3: x = '道具屋がいた！'; y = 3; document.getElementById('CampTrade').textContent = '道具屋に話しかける'; break;
+            }
+            document.getElementById('log')  .textContent = x;
+        }
+        function Camprest(){
+            playerhealth += playermaxhealth * Camprestper;
+            if(playerhealth > playermaxhealth){playerhealth = playermaxhealth;};
+            document.getElementById('log').textContent = '寝ることにした....';//睡眠阻害イベント...はさすがにやめようか..wちょっと隠しイベント多すぎる
+        }
+        async function Camptrade(){
+            if(y == 1){
+                document.getElementById('log').textContent = '武器屋に話しかけた！';
+                await delay(1000);
+                document.getElementById('log').textContent = 'ここにはこんなものがあるけど、どうする？';
+                document.getElementById('CampArea').innerHTML = '<iframe height="230" width="200" src="assets/shops/weapons.txt"></iframe><br><input type="text" id="ShopInputText" minlength="2" maxlength="2" size="16" placeholder="write number here"><button class="button" onclick="ShopBuyButton()">Buy</button></p>'
+            }else if(y == 2){
+                document.getElementById('log').textContent = '防具屋に話しかけた！';
+                await delay(1000);
+                document.getElementById('log').textContent = 'うちの店ではこんなものが売ってるよ';
+                document.getElementById('CampArea').innerHTML = '<iframe height="230" width="200" src="assets/shops/armors.txt"></iframe><br><input type="text" id="ShopInputText" minlength="2" maxlength="2" size="16" placeholder="write number here"><button class="button" onclick="ShopBuyButton()">Buy</button>'
+            }else if(y == 3){
+                document.getElementById('log').textContent = '道具屋に話しかけた！';
+                await delay(1000);
+                document.getElementById('log').textContent = 'いらっしゃいませぇぇぇぇぇ？？ご注文をどうぞ！！！！';
+                document.getElementById('CampArea').innerHTML = '<iframe height="230" width="200" src="assets/shops/tools.txt"></iframe><br><input type="text" id="ShopInputText" minlength="2" maxlength="2" size="16" placeholder="write number here"><button class="button" onclick="ShopBuyButton()">Buy</button>'
+            }else if(y == 10){
+                document.getElementById('log').textContent = '武器屋に話しかけた！';
+                await delay(1000);
+                document.getElementById('log').textContent = 'ほう..よく来たな。好きに見ていってくれ';
+                document.getElementById('CampArea').innerHTML = '<iframe height="230" width="200" src="assets/shops/rareweapons.txt"></iframe><br><input type="text" id="ShopInputText" minlength="2" maxlength="2" size="16" placeholder="write number here"><button class="button" onclick="ShopBuyButton()">Buy</button>'
+            }
+        }
+    </script>
+</body>
+</html>
